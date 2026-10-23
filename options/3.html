@@ -1,0 +1,525 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tomhen Services</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#111418;--bg2:#181c22;--panel:#1d222a;--edge:#2c333d;--grid:rgba(120,140,160,.08);--grid2:rgba(120,140,160,.16);
+  --txt:#d9dee5;--dim:#8590a0;--cy:#3fd4f0;--ye:#f5d547;--ma:#e36bf0;--gr:#5df08e;--rd:#ff5c5c;
+  --mono:'DM Mono',ui-monospace,monospace;--head:'Chakra Petch',system-ui,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;overflow-x:clip}
+body{background:var(--bg);color:var(--txt);font-family:var(--mono);font-size:15px;line-height:1.6;overflow-x:clip;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:16px 16px}
+a{color:inherit}
+h1,h2,h3{font-family:var(--head);font-weight:600;line-height:1.08;letter-spacing:.005em}
+.wrap{width:100%;max-width:1240px;margin:0 auto;padding:0 16px}
+.c-cy{color:var(--cy)}.c-ye{color:var(--ye)}.c-ma{color:var(--ma)}.c-gr{color:var(--gr)}.c-rd{color:var(--rd)}
+/* header = toolbar */
+header{position:sticky;top:0;z-index:50;background:var(--panel);border-bottom:1px solid var(--edge)}
+.hbar{display:flex;align-items:center;gap:12px;min-height:56px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--head);font-weight:700;font-size:18px;margin-right:auto;min-height:44px}
+.logo svg{flex:none}
+.burger{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-width:44px;min-height:44px;background:var(--bg2);border:1px solid var(--edge);color:var(--txt);font-family:var(--mono);font-size:13px;padding:0 12px;cursor:pointer}
+.burger:focus-visible,a:focus-visible,button:focus-visible{outline:2px solid var(--cy);outline-offset:2px}
+#nav{display:none;position:fixed;left:0;right:0;top:56px;bottom:0;background:var(--bg);border-top:1px solid var(--edge);overflow-y:auto}
+#nav.open{display:block}
+#nav ul{list-style:none;padding:8px 16px calc(100px + env(safe-area-inset-bottom))}
+#nav a{display:flex;align-items:center;gap:12px;min-height:52px;text-decoration:none;font-size:16px;border-bottom:1px solid var(--edge)}
+#nav a i{width:10px;height:10px;flex:none;font-style:normal}
+#nav .navcta{margin-top:14px;justify-content:center;background:var(--cy);color:#06222a;border:0;font-weight:500}
+.hbar .hcta{display:none}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 18px;text-decoration:none;font-family:var(--mono);font-size:14px;font-weight:500;border:1px solid var(--cy);background:var(--cy);color:#06222a;cursor:pointer}
+.btn:hover{background:#7fe6f8}
+.btn.o{background:transparent;color:var(--cy)}
+.btn.o:hover{background:rgba(63,212,240,.12)}
+/* hero CAD window */
+.hero{padding:14px 0 30px}
+.win{border:1px solid var(--edge);background:var(--bg2)}
+.tabs{display:flex;gap:0;border-bottom:1px solid var(--edge);font-size:12px;overflow:hidden}
+.tabs span{padding:8px 14px;border-right:1px solid var(--edge);color:var(--dim);white-space:nowrap}
+.tabs span.on{background:var(--bg);color:var(--txt);border-top:2px solid var(--cy)}
+.vp{display:grid;grid-template-columns:1fr}
+.layers{display:none}
+.canvas{position:relative;padding:22px 16px 18px;background:var(--bg);
+  background-image:linear-gradient(var(--grid2) 1px,transparent 1px),linear-gradient(90deg,var(--grid2) 1px,transparent 1px);background-size:48px 48px}
+.canvas .lbl{font-size:11.5px;color:var(--dim);margin-bottom:10px}
+h1{font-size:clamp(32px,9.4vw,68px);color:#fff;margin-bottom:12px}
+h1 .c-cy{display:block}
+.lede{color:var(--dim);font-size:15px;max-width:38em;margin-bottom:18px}
+.acts{display:flex;flex-direction:column;gap:10px}
+.model{margin-top:20px;position:relative}
+.model svg{width:100%;height:auto;display:block;max-height:220px}
+.model .full{display:none}
+.cmd{border-top:1px solid var(--edge);font-size:12.5px;padding:8px 12px;background:var(--panel)}
+.cmd p{color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cmd p b{color:var(--txt);font-weight:400}
+.cur{display:inline-block;width:8px;height:14px;background:var(--cy);vertical-align:-2px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.status{display:flex;flex-wrap:wrap;gap:4px 16px;border-top:1px solid var(--edge);padding:6px 12px;font-size:11px;color:var(--dim);background:var(--bg2)}
+.status b{color:var(--gr);font-weight:400}
+/* sections */
+section{padding:52px 0}
+.sh{margin-bottom:24px}
+.sh .cmdline{font-size:12px;color:var(--dim);margin-bottom:8px}
+.sh .cmdline b{color:var(--cy);font-weight:400}
+h2{font-size:clamp(26px,6.4vw,44px);color:#fff}
+.sh p{color:var(--dim);margin-top:10px;max-width:42em}
+/* layers / services */
+.lyr{display:grid;grid-template-columns:1fr;gap:10px}
+.ly{background:var(--panel);border:1px solid var(--edge);border-left:4px solid var(--c,var(--cy));padding:18px 16px}
+.ly .top{display:flex;justify-content:space-between;align-items:center;font-size:11.5px;color:var(--dim);margin-bottom:10px;gap:8px}
+.ly .top span:first-child{color:var(--c)}
+.ly .sw{display:inline-flex;gap:6px;align-items:center}
+.ly .sw i{width:10px;height:10px;background:var(--c);display:inline-block}
+.ly h3{font-size:21px;color:#fff;margin-bottom:6px}
+.ly p{color:var(--dim);font-size:14.5px}
+.ly.feat{background:linear-gradient(135deg,rgba(93,240,142,.10),transparent 60%),var(--panel)}
+.ly.feat .fmt{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.ly.feat .fmt span{border:1px solid var(--gr);color:var(--gr);font-size:11px;padding:3px 8px}
+/* projects */
+.pjs{display:grid;grid-template-columns:1fr;gap:14px}
+.pj{border:1px solid var(--edge);background:var(--panel)}
+.pj .bar{display:flex;justify-content:space-between;font-size:11px;color:var(--dim);padding:7px 12px;border-bottom:1px solid var(--edge);background:var(--bg2)}
+.pj svg{width:100%;height:auto;display:block;background:var(--bg);border-bottom:1px solid var(--edge)}
+.pj .b{padding:16px}
+.pj h3{font-size:19px;color:#fff;margin-bottom:6px}
+.pj p{color:var(--dim);font-size:14.5px}
+.pj ul{list-style:none;margin-top:12px;font-size:12px;display:grid;gap:4px}
+.pj li::before{content:"› ";color:var(--cy)}
+/* process history */
+.hist{border:1px solid var(--edge);background:var(--panel)}
+.hist .ln{display:grid;grid-template-columns:40px 1fr;gap:12px;padding:16px;border-bottom:1px solid var(--edge)}
+.hist .ln:last-child{border-bottom:0}
+.hist .ln>span{font-size:22px;font-family:var(--head);color:var(--ye)}
+.hist code{font-family:var(--mono);font-size:12px;color:var(--cy);display:block;margin-bottom:4px}
+.hist h3{font-size:19px;color:#fff;margin-bottom:4px}
+.hist p{color:var(--dim);font-size:14.5px}
+/* why + properties */
+.why{display:grid;grid-template-columns:1fr;gap:20px}
+.props{border:1px solid var(--edge);background:var(--panel);font-size:14px}
+.props .ph{padding:9px 14px;background:var(--bg2);border-bottom:1px solid var(--edge);font-size:11.5px;color:var(--dim);display:flex;justify-content:space-between}
+.props .r{display:grid;grid-template-columns:1fr auto;gap:10px;padding:13px 14px;border-bottom:1px solid var(--edge);align-items:center}
+.props .r:last-child{border-bottom:0}
+.props .r b{font-weight:400;color:var(--gr);font-size:12px}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{border:1px solid var(--edge);background:var(--panel);padding:16px 14px;position:relative}
+.stat::before,.stat::after{content:"";position:absolute;width:10px;height:10px;border:1px solid var(--ye)}
+.stat::before{top:-1px;left:-1px;border-right:0;border-bottom:0}
+.stat::after{bottom:-1px;right:-1px;border-left:0;border-top:0}
+.stat strong{display:block;font-family:var(--head);font-size:clamp(30px,8vw,46px);color:var(--ye);line-height:1}
+.stat span{font-size:11.5px;color:var(--dim)}
+/* sectors */
+.sect{display:grid;grid-template-columns:1fr;gap:8px}
+.sect a{display:flex;align-items:center;justify-content:space-between;min-height:56px;padding:0 16px;border:1px solid var(--edge);background:var(--panel);text-decoration:none;font-family:var(--head);font-size:18px;color:#fff}
+.sect a span{font-family:var(--mono);font-size:11px;color:var(--ma)}
+.sect a:hover{border-color:var(--ma)}
+/* accreditations */
+.acc{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.acc div{border:1px dashed var(--dim);padding:14px;font-size:13px;display:flex;flex-direction:column;gap:6px;align-items:flex-start}
+.acc small{color:var(--dim);font-size:11px}
+.logos{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.logos div{height:56px;display:grid;place-items:center;border:1px solid var(--edge);color:var(--dim);font-size:11.5px;
+  background:repeating-linear-gradient(-45deg,transparent 0 6px,rgba(120,140,160,.08) 6px 7px)}
+.fine{font-size:11.5px;color:var(--dim);margin-top:10px}
+/* contact dialog */
+.dlg{border:1px solid var(--cy);background:var(--panel);box-shadow:0 0 0 1px rgba(63,212,240,.15),0 20px 60px rgba(0,0,0,.4)}
+.dlg .tt{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:linear-gradient(90deg,rgba(63,212,240,.2),transparent);border-bottom:1px solid var(--edge);font-size:12.5px}
+.dgrid{display:grid;grid-template-columns:1fr}
+.cinfo{padding:18px 16px;border-bottom:1px solid var(--edge)}
+.cinfo dl{display:grid;grid-template-columns:auto 1fr;gap:8px 14px;font-size:14px}
+.cinfo dt{color:var(--dim);font-size:12px}
+.cinfo dd a{text-decoration:none;color:var(--cy);display:inline-flex;align-items:center;min-height:44px;margin:-12px 0}
+form{padding:18px 16px;display:grid;grid-template-columns:1fr;gap:14px}
+label{display:flex;flex-direction:column;gap:6px;font-size:12px;color:var(--dim)}
+input,select,textarea{font:inherit;font-family:var(--mono);font-size:16px;min-height:48px;width:100%;padding:10px 12px;background:var(--bg);border:1px solid var(--edge);color:var(--txt);border-radius:0}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--cy);box-shadow:0 0 0 2px rgba(63,212,240,.25)}
+textarea{min-height:120px;resize:vertical}
+.thanks{display:none;border:1px solid var(--gr);color:var(--gr);padding:14px;font-size:14px}
+form.sent .thanks{display:block}
+form.sent .fld{display:none}
+/* footer */
+footer{border-top:1px solid var(--edge);background:var(--panel);padding:30px 0 calc(150px + env(safe-area-inset-bottom))}
+.fg{display:grid;grid-template-columns:1fr;gap:20px;font-size:14px}
+footer h4{font-size:11.5px;color:var(--dim);font-weight:400;margin-bottom:4px}
+footer ul{list-style:none}
+footer a{text-decoration:none;display:inline-flex;align-items:center;min-height:44px}
+footer a:hover{color:var(--cy)}
+.legal{margin-top:20px;padding-top:12px;border-top:1px solid var(--edge);font-size:11px;color:var(--dim);display:flex;flex-direction:column;gap:6px}
+/* mobile action bar + pill */
+.mbar{position:fixed;left:0;right:0;bottom:0;z-index:60;display:flex;gap:8px;padding:8px 12px calc(8px + env(safe-area-inset-bottom));background:var(--panel);border-top:1px solid var(--edge)}
+.mbar a{flex:1;min-height:50px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-decoration:none;font-size:14px;border:1px solid var(--cy);color:var(--cy);line-height:1.25}
+.mbar a small{font-size:11px;color:var(--dim)}
+.mbar a.q{background:var(--cy);color:#06222a;font-weight:500}
+.pill{position:fixed;left:12px;bottom:calc(78px + env(safe-area-inset-bottom));z-index:61;display:inline-flex;align-items:center;min-height:44px;padding:0 14px;border-radius:99px;background:#fff;color:#111;font-size:12px;text-decoration:none;box-shadow:0 4px 16px rgba(0,0,0,.4)}
+.pill:hover{background:var(--ye)}
+@media (prefers-reduced-motion:reduce){.cur{animation:none}html{scroll-behavior:auto}}
+/* ---------- larger screens ---------- */
+@media (min-width:600px){
+  .acts{flex-direction:row;flex-wrap:wrap}
+  .lyr,.pjs{grid-template-columns:1fr 1fr}
+  .acc{grid-template-columns:repeat(4,1fr)}
+  .logos{grid-template-columns:repeat(3,1fr)}
+  .fg{grid-template-columns:1fr 1fr}
+  .sect{grid-template-columns:1fr 1fr}
+}
+@media (min-width:768px){
+  .mbar{display:none}
+  .pill{bottom:calc(14px + env(safe-area-inset-bottom));left:14px}
+  footer{padding-bottom:80px}
+  body{font-size:15.5px}
+  .wrap{padding:0 24px}
+  .model svg{max-height:none}
+  .model .simple{display:none}
+  .model .full{display:block}
+  .dgrid{grid-template-columns:.8fr 1.2fr}
+  .cinfo{border-bottom:0;border-right:1px solid var(--edge);padding:24px}
+  form{grid-template-columns:1fr 1fr;padding:24px}
+  form .full{grid-column:1/-1}
+  form .btn{justify-self:start}
+  .legal{flex-direction:row;justify-content:space-between}
+  section{padding:72px 0}
+}
+@media (min-width:1000px){
+  .burger{display:none}
+  #nav{display:block;position:static;background:none;border:0;overflow:visible}
+  #nav ul{display:flex;padding:0;gap:2px}
+  #nav a{min-height:44px;border:0;font-size:13px;padding:0 10px;color:var(--dim)}
+  #nav a:hover{color:var(--txt);background:var(--bg2)}
+  #nav .navli{display:none}
+  .hbar .hcta{display:inline-flex;min-height:40px}
+  .vp{grid-template-columns:190px 1fr}
+  .layers{display:block;border-right:1px solid var(--edge);background:var(--panel);font-size:12px}
+  .layers h4{font-weight:400;color:var(--dim);padding:10px 12px;border-bottom:1px solid var(--edge);font-size:11px}
+  .layers li{list-style:none;display:flex;align-items:center;gap:8px;padding:7px 12px;border-bottom:1px solid var(--edge)}
+  .layers li i{width:10px;height:10px;flex:none}
+  .layers li em{margin-left:auto;font-style:normal;color:var(--dim)}
+  .canvas{padding:34px 34px 26px;display:grid;grid-template-columns:1.05fr 1fr;gap:28px;align-items:center}
+  .canvas .lbl{grid-column:1/-1;margin:0}
+  .model{margin:0}
+  .lyr,.pjs{grid-template-columns:repeat(3,1fr)}
+  .lyr .feat{grid-column:span 2}
+  .why{grid-template-columns:1.2fr 1fr;gap:28px}
+  .sect{grid-template-columns:repeat(5,1fr)}
+  .sect a{flex-direction:column;align-items:flex-start;justify-content:center;gap:6px;min-height:110px;font-size:17px}
+  .logos{grid-template-columns:repeat(6,1fr)}
+  .fg{grid-template-columns:2fr 1fr 1fr 1fr}
+  .hist{display:grid;grid-template-columns:repeat(4,1fr)}
+  .hist .ln{grid-template-columns:1fr;border-bottom:0;border-right:1px solid var(--edge);padding:20px}
+  .hist .ln:last-child{border-right:0}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap hbar">
+    <a class="logo" href="#top" aria-label="Tomhen Services home">
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="#3fd4f0" stroke-width="1.5"><path d="M14 0v28M0 14h28"/><rect x="8" y="8" width="12" height="12"/></svg>
+      Tomhen<span class="c-cy">_</span>Services
+    </a>
+    <nav id="nav" aria-label="Main">
+      <ul>
+        <li><a href="#services"><i style="background:var(--gr)"></i>Services</a></li>
+        <li><a href="#projects"><i style="background:var(--cy)"></i>Projects</a></li>
+        <li><a href="#process"><i style="background:var(--ye)"></i>Process</a></li>
+        <li><a href="#why"><i style="background:var(--ye)"></i>Why us</a></li>
+        <li><a href="#sectors"><i style="background:var(--ma)"></i>Sectors</a></li>
+        <li><a href="#contact"><i style="background:var(--txt)"></i>Contact</a></li>
+        <li class="navli"><a class="navcta" href="#contact">Request a quote</a></li>
+      </ul>
+    </nav>
+    <a class="btn hcta" href="#contact">Request a quote</a>
+    <button class="burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav">
+      <svg width="18" height="14" viewBox="0 0 18 14" stroke="currentColor" stroke-width="2"><path d="M0 1h18M0 7h18M0 13h18"/></svg>
+    </button>
+  </div>
+</header>
+
+<main id="top">
+<section class="hero">
+  <div class="wrap">
+    <div class="win">
+      <div class="tabs" aria-hidden="true"><span class="on">TOMHEN_GA.dwg</span><span>ASSET_DATA.dwg</span><span>SURVEY_01.dwg</span></div>
+      <div class="vp">
+        <aside class="layers" aria-hidden="true">
+          <h4>LAYER MANAGER</h4>
+          <ul>
+            <li><i style="background:var(--gr)"></i>ASSET-DATA<em>on</em></li>
+            <li><i style="background:var(--cy)"></i>SURVEY<em>on</em></li>
+            <li><i style="background:var(--ye)"></i>SITE-MGMT<em>on</em></li>
+            <li><i style="background:var(--ma)"></i>SUBCON<em>on</em></li>
+            <li><i style="background:var(--rd)"></i>DEFECTS<em>on</em></li>
+            <li><i style="background:var(--txt)"></i>STAFF<em>on</em></li>
+            <li><i style="background:var(--dim)"></i>PROJ-SVC<em>on</em></li>
+          </ul>
+        </aside>
+        <div class="canvas">
+          <div class="lbl">MODEL SPACE · UCS: WORLD · INSPECTION &amp; ASSET DATA</div>
+          <div>
+            <h1>Accurate data.<span class="c-cy">Skilled people.</span>Delivered on programme.</h1>
+            <p class="lede">Surveying, inspection and contract delivery for principal contractors, transport operators, public-sector bodies and engineering consultancies — with clean data handed over in your CAD, GIS, BIM or spreadsheet formats.</p>
+            <div class="acts"><a class="btn" href="#contact">Request a quote</a><a class="btn o" href="#services">Open layer list</a></div>
+          </div>
+          <div class="model">
+            <!-- simplified mobile drawing -->
+            <svg class="simple" viewBox="0 0 320 150" fill="none" stroke-width="1.4" aria-hidden="true">
+              <path d="M10 120h300" stroke="#8590a0"/>
+              <path d="M30 120V70h260v50" stroke="#3fd4f0"/>
+              <path d="M30 70l40-30h180l40 30" stroke="#3fd4f0"/>
+              <g fill="#ff5c5c" stroke="none"><circle cx="110" cy="70" r="5"/><circle cx="220" cy="95" r="5"/></g>
+              <path d="M110 70l30-40h50" stroke="#ff5c5c"/>
+              <text x="146" y="26" fill="#ff5c5c" stroke="none" font-family="DM Mono" font-size="11">DEFECT D-014</text>
+              <path d="M160 0v150M0 80h320" stroke="#5df08e" stroke-width=".7" stroke-dasharray="3 3"/>
+            </svg>
+            <svg class="full" viewBox="0 0 520 380" fill="none" stroke-width="1.3" font-family="DM Mono,monospace" aria-label="Wireframe drawing of a bridge structure with defect markers and coordinates">
+              <g stroke="#8590a0"><path d="M0 330h520"/><path d="M0 340h520" stroke-dasharray="2 6"/></g>
+              <!-- bridge deck isometric -->
+              <g stroke="#3fd4f0">
+                <path d="M40 200l220-80 220 80-220 80z"/>
+                <path d="M40 200v18l220 80 220-80v-18M260 280v18"/>
+                <path d="M110 226v104M410 226v104M190 254v76M330 254v76"/>
+                <path d="M100 226h20M400 226h20" />
+              </g>
+              <g stroke="#e36bf0" stroke-dasharray="6 4"><path d="M95 180l220-80M205 220l220-80"/></g>
+              <!-- rails on deck -->
+              <g stroke="#f5d547"><path d="M120 196l200-72M150 207l200-72"/></g>
+              <!-- defect markers -->
+              <g stroke="#ff5c5c"><circle cx="190" cy="290" r="10"/><path d="M180 280l20 20M200 280l-20 20"/><circle cx="370" cy="190" r="10"/><path d="M360 180l20 20M380 180l-20 20"/></g>
+              <path d="M370 180V70h90" stroke="#ff5c5c"/>
+              <rect x="380" y="40" width="130" height="44" fill="#111418" stroke="#ff5c5c"/>
+              <text x="390" y="58" fill="#ff5c5c" stroke="none" font-size="11">DEFECT D-014</text>
+              <text x="390" y="74" fill="#d9dee5" stroke="none" font-size="10">SPALL · CAT 2</text>
+              <path d="M190 300v40h-130" stroke="#ff5c5c"/>
+              <text x="20" y="360" fill="#ff5c5c" stroke="none" font-size="10">D-009 BEARING · CAT 3</text>
+              <!-- crosshair -->
+              <g stroke="#5df08e" stroke-width=".9"><path d="M260 0v380M0 160h520"/><rect x="252" y="152" width="16" height="16"/></g>
+              <text x="272" y="150" fill="#5df08e" stroke="none" font-size="10">E 531 842.207  N 180 455.931</text>
+              <!-- UCS icon -->
+              <g stroke="#d9dee5"><path d="M20 300V260M20 300h40"/></g>
+              <text x="62" y="304" fill="#d9dee5" stroke="none" font-size="10">X</text><text x="14" y="254" fill="#d9dee5" stroke="none" font-size="10">Y</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div class="cmd" aria-hidden="true">
+        <p>Command: <b>EXPORT</b> → DWG · SHP · IFC · XLSX</p>
+        <p>Command: <b>MOBILISE</b> crew=vetted shift=night <span class="cur"></span></p>
+      </div>
+      <div class="status" aria-hidden="true"><span>SNAP <b>ON</b></span><span>GRID <b>ON</b></span><span>ORTHO <b>ON</b></span><span>LONDON &amp; SE</span><span>UK-WIDE</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="wrap">
+    <div class="sh">
+      <div class="cmdline">Command: <b>LAYER</b> —list services</div>
+      <h2>Six layers of support</h2>
+      <p>An independent subcontractor and outsourcing partner. Switch on the layers you need — data, people, delivery — and we run them through one accountable contact.</p>
+    </div>
+    <div class="lyr">
+      <article class="ly feat" style="--c:var(--gr)">
+        <div class="top"><span class="sw"><i></i>L-06 · ASSET-DATA</span><span>PRIMARY</span></div>
+        <h3>Inspection &amp; asset data</h3>
+        <p>Asset inspections, defect logging and clean data handed over in your formats (CAD, GIS, BIM, spreadsheets).</p>
+        <div class="fmt"><span>.DWG</span><span>.SHP</span><span>.IFC</span><span>.XLSX</span></div>
+      </article>
+      <article class="ly" style="--c:var(--cy)">
+        <div class="top"><span class="sw"><i></i>L-03 · SURVEY</span><span>ON</span></div>
+        <h3>Surveying</h3>
+        <p>Topographic, measured building, utility and GPR, rail and track asset, condition and dilapidation surveys, plus setting out.</p>
+      </article>
+      <article class="ly" style="--c:var(--ma)">
+        <div class="top"><span class="sw"><i></i>L-01 · SUBCON</span><span>ON</span></div>
+        <h3>Subcontract delivery</h3>
+        <p>Labour, supervision and plant packages delivered to your scope, programme and safety standards.</p>
+      </article>
+      <article class="ly" style="--c:var(--txt)">
+        <div class="top"><span class="sw"><i></i>L-02 · STAFF</span><span>ON</span></div>
+        <h3>Contract &amp; interim staff</h3>
+        <p>Engineers, project managers, site supervisors, planners and skilled operatives, on day rate or fixed term.</p>
+      </article>
+      <article class="ly" style="--c:var(--ye)">
+        <div class="top"><span class="sw"><i></i>L-05 · SITE-MGMT</span><span>ON</span></div>
+        <h3>Site &amp; works management</h3>
+        <p>Experienced supervisors and managers who run packages day to day and report back to you.</p>
+      </article>
+      <article class="ly" style="--c:var(--dim)">
+        <div class="top"><span class="sw"><i></i>L-04 · PROJ-SVC</span><span>ON</span></div>
+        <h3>Outsourced project services</h3>
+        <p>Planning, document control, commercial/QS support and CDM and H&amp;S coordination.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="projects" style="background:var(--bg2);border-top:1px solid var(--edge);border-bottom:1px solid var(--edge)">
+  <div class="wrap">
+    <div class="sh">
+      <div class="cmdline">Command: <b>XREF</b> —attach examples</div>
+      <h2>Example projects</h2>
+      <p>Illustrative placeholders showing the type of work we support.</p>
+    </div>
+    <div class="pjs">
+      <article class="pj">
+        <div class="bar"><span>XREF_01</span><span>CENTRAL LONDON</span></div>
+        <svg viewBox="0 0 360 160" fill="none" stroke-width="1.2" aria-hidden="true"><g stroke="#3fd4f0"><path d="M40 140V50h280v90M40 50l140-30 140 30"/><path d="M80 140V90h60v50M220 140V90h60v50"/></g><g stroke="#5df08e" stroke-dasharray="3 3"><path d="M40 30v120M320 30v120"/></g><g fill="#f5d547"><circle cx="40" cy="50" r="3"/><circle cx="320" cy="50" r="3"/><circle cx="180" cy="20" r="3"/></g></svg>
+        <div class="b"><h3>Station access improvements</h3><p>Measured building survey plus site supervision during overnight works.</p><ul><li>Measured building survey</li><li>Overnight site supervision</li></ul></div>
+      </article>
+      <article class="pj">
+        <div class="bar"><span>XREF_02</span><span>SOUTH LONDON</span></div>
+        <svg viewBox="0 0 360 160" fill="none" stroke-width="1.2" aria-hidden="true"><path d="M0 110C70 80 130 130 200 100S320 60 360 70" stroke="#e36bf0" stroke-width="10" stroke-opacity=".25"/><path d="M0 110C70 80 130 130 200 100S320 60 360 70" stroke="#e36bf0"/><g fill="#f5d547"><circle cx="30" cy="98" r="3"/><circle cx="80" cy="92" r="3"/><circle cx="130" cy="112" r="3"/><circle cx="190" cy="103" r="3"/><circle cx="250" cy="84" r="3"/><circle cx="310" cy="70" r="3"/></g><text x="16" y="30" fill="#8590a0" font-family="DM Mono" font-size="10">40 SITES</text></svg>
+        <div class="b"><h3>Highway resurfacing programme</h3><p>Subcontract labour and traffic-management coordination across 40 sites.</p><ul><li>Subcontract labour</li><li>Traffic-management coordination</li></ul></div>
+      </article>
+      <article class="pj">
+        <div class="bar"><span>XREF_03</span><span>EAST LONDON</span></div>
+        <svg viewBox="0 0 360 160" fill="none" stroke-width="1.2" aria-hidden="true"><path d="M0 40h360" stroke="#8590a0"/><path d="M0 80h120c30 0 30 40 60 40h180" stroke="#5df08e" stroke-width="2"/><path d="M0 80h360" stroke="#ff5c5c" stroke-dasharray="6 5"/><g stroke="#3fd4f0" stroke-width=".8"><path d="M60 40c0 20 20 40 0 60M100 40c0 20 20 40 0 60M240 40c0 30 20 60 0 90"/></g></svg>
+        <div class="b"><h3>Utility diversion</h3><p>GPR and utility survey, setting out, and outsourced document control.</p><ul><li>GPR &amp; utility survey</li><li>Setting out · Document control</li></ul></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="process">
+  <div class="wrap">
+    <div class="sh">
+      <div class="cmdline">Command: <b>HISTORY</b></div>
+      <h2>How we work</h2>
+    </div>
+    <div class="hist">
+      <div class="ln"><span>01</span><div><code>&gt; BRIEF</code><h3>Brief</h3><p>Tell us the scope, location, access constraints and deadline.</p></div></div>
+      <div class="ln"><span>02</span><div><code>&gt; SCOPE --price</code><h3>Scope &amp; price</h3><p>A clear proposal within 48 hours (placeholder), on day-rate, fixed-price or framework terms.</p></div></div>
+      <div class="ln"><span>03</span><div><code>&gt; MOBILISE</code><h3>Mobilise</h3><p>Vetted, inducted and competent people on site, fast.</p></div></div>
+      <div class="ln"><span>04</span><div><code>&gt; DELIVER --report</code><h3>Deliver &amp; report</h3><p>One point of contact, daily or weekly reporting, and clean handover.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="why" style="padding-top:0">
+  <div class="wrap">
+    <div class="sh">
+      <div class="cmdline">Command: <b>PROPERTIES</b></div>
+      <h2>Why Tomhen</h2>
+    </div>
+    <div class="why">
+      <div class="props">
+        <div class="ph"><span>OBJECT: TOMHEN_SERVICES</span><span>5 PROPS</span></div>
+        <div class="r"><span>One accountable point of contact</span><b>TRUE</b></div>
+        <div class="r"><span>Rapid mobilisation, including night and possession working</span><b>TRUE</b></div>
+        <div class="r"><span>Safety-trained, compliance-ready teams</span><b>TRUE</b></div>
+        <div class="r"><span>Flexible engagement: day rate, fixed price, call-off</span><b>TRUE</b></div>
+        <div class="r"><span>Transparent reporting and clean data handover</span><b>TRUE</b></div>
+      </div>
+      <!-- Placeholder statistics: replace with verified figures before going live -->
+      <div class="stats">
+        <div class="stat"><strong>15+</strong><span>years' combined experience</span></div>
+        <div class="stat"><strong>200+</strong><span>projects supported</span></div>
+        <div class="stat"><strong>24/7</strong><span>mobilisation</span></div>
+        <div class="stat"><strong>100%</strong><span>vetted personnel</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="sectors" style="padding-top:0">
+  <div class="wrap">
+    <div class="sh">
+      <div class="cmdline">Command: <b>SECTOR</b> [options]</div>
+      <h2>Sectors</h2>
+      <p>London's rail, road and utility networks — and the stations and public buildings around them.</p>
+    </div>
+    <div class="sect">
+      <a href="#contact">Rail &amp; Underground<span>[R]</span></a>
+      <a href="#contact">Highways &amp; Streets<span>[H]</span></a>
+      <a href="#contact">Utilities<span>[U]</span></a>
+      <a href="#contact">Stations &amp; Buildings<span>[B]</span></a>
+      <a href="#contact">Local Authority &amp; Public Sector<span>[P]</span></a>
+    </div>
+  </div>
+</section>
+
+<section id="accreditations" style="padding-top:0">
+  <div class="wrap">
+    <div class="sh">
+      <div class="cmdline">Command: <b>ATTRIB</b> —compliance</div>
+      <h2>Accreditations &amp; clients</h2>
+    </div>
+    <div class="acc">
+      <!-- Placeholder: replace with a real accreditation actually held -->
+      <div><span class="c-gr">◆</span>Accreditation<small>placeholder</small></div>
+      <!-- Placeholder: replace with a real safety scheme membership actually held -->
+      <div><span class="c-ye">◆</span>Safety scheme<small>placeholder</small></div>
+      <!-- Placeholder: replace with a real supplier registration actually held -->
+      <div><span class="c-cy">◆</span>Supplier registration<small>placeholder</small></div>
+      <!-- Placeholder: replace with a real ISO certification actually held -->
+      <div><span class="c-ma">◆</span>ISO standard<small>placeholder</small></div>
+    </div>
+    <div class="logos" aria-label="Client logo placeholders"><div>Client logo</div><div>Client logo</div><div>Client logo</div><div>Client logo</div><div>Client logo</div><div>Client logo</div></div>
+    <p class="fine">Client types: principal contractors, transport operators, public-sector bodies and engineering consultancies. Placeholders only — no client relationship is implied.</p>
+  </div>
+</section>
+
+<section id="contact" style="padding-top:0">
+  <div class="wrap">
+    <div class="sh">
+      <div class="cmdline">Command: <b>QUOTE</b></div>
+      <h2>Request a quote</h2>
+      <p>Send the brief. You'll get a clear proposal within 48 hours (placeholder).</p>
+    </div>
+    <div class="dlg">
+      <div class="tt"><span>REQUEST_QUOTE.dlg</span><span class="c-dim" style="color:var(--dim)">[×]</span></div>
+      <div class="dgrid">
+        <div class="cinfo">
+          <dl>
+            <dt>TEL</dt><dd><a href="tel:02000000000">020 0000 0000</a></dd>
+            <dt>EMAIL</dt><dd><a href="mailto:hello@example.co.uk">hello@example.co.uk</a></dd>
+            <dt>ADDR</dt><dd>[Registered address]</dd>
+            <dt>AREA</dt><dd>London &amp; the South East · UK-wide mobilisation</dd>
+          </dl>
+        </div>
+        <form id="quote" novalidate>
+          <label class="fld">Name<input type="text" name="name" autocomplete="name"></label>
+          <label class="fld">Company<input type="text" name="company" autocomplete="organization"></label>
+          <label class="fld">Email<input type="email" name="email" autocomplete="email" inputmode="email"></label>
+          <label class="fld">Phone<input type="tel" name="phone" autocomplete="tel" inputmode="tel"></label>
+          <label class="fld full">Service
+            <select name="service"><option>Inspection &amp; asset data</option><option>Surveying</option><option>Subcontract delivery</option><option>Contract &amp; interim staff</option><option>Site &amp; works management</option><option>Outsourced project services</option></select></label>
+          <label class="fld full">Brief — scope, location, access, deadline<textarea name="brief"></textarea></label>
+          <div class="fld full"><button class="btn" type="submit">Request a quote ↵</button></div>
+          <div class="thanks full" role="status">&gt; QUOTE submitted. Thanks — we'll be in touch shortly. (Demo form: nothing was sent.)</div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="fg">
+      <div><a class="logo" href="#top">Tomhen<span class="c-cy">_</span>Services</a><p style="color:var(--dim);max-width:28em">Contract delivery, surveying and specialist support for infrastructure clients.</p></div>
+      <div><h4>SERVICES</h4><ul><li><a href="#services">Asset data</a></li><li><a href="#services">Surveying</a></li><li><a href="#services">Subcontract delivery</a></li></ul></div>
+      <div><h4>COMPANY</h4><ul><li><a href="#process">Process</a></li><li><a href="#projects">Projects</a></li><li><a href="#contact">Contact</a></li></ul></div>
+      <div><h4>CONTACT</h4><ul><li><a href="tel:02000000000">020 0000 0000</a></li><li><a href="mailto:hello@example.co.uk">hello@example.co.uk</a></li><li>[Registered address]</li></ul></div>
+    </div>
+    <div class="legal"><span>© Tomhen Services Ltd (placeholder) · Company no. [00000000] · [Registered address]</span><span>LAYOUT1 · MODEL · 1:1</span></div>
+  </div>
+</footer>
+
+<div class="mbar" role="region" aria-label="Quick actions"><a href="tel:02000000000">Call<small>020 0000 0000</small></a><a class="q" href="#contact">Request a quote</a></div>
+<a class="pill" href="../index.html" aria-label="Back to shortlist">Option 3 · Back to shortlist</a>
+<script>
+(function(){
+  var nav=document.getElementById('nav'),b=document.querySelector('.burger');
+  function set(o){nav.classList.toggle('open',o);b.setAttribute('aria-expanded',o?'true':'false');}
+  b.addEventListener('click',function(){set(!nav.classList.contains('open'))});
+  nav.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){set(false)})});
+  document.getElementById('quote').addEventListener('submit',function(e){e.preventDefault();this.classList.add('sent');});
+})();
+</script>
+</body>
+</html>

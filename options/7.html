@@ -1,0 +1,477 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tomhen Services</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0a0a;--s1:#131313;--s2:#1b1b1b;--ink:#f4f4ef;--muted:#9a9a92;--line:#262626;
+  --lime:#c6f432;--lime2:#9ad11a;--mono:'Geist Mono',ui-monospace,monospace;--r:22px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;color-scheme:dark;-webkit-text-size-adjust:100%}
+body{font-family:'Geist',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55;overflow-x:clip}
+a{color:inherit}
+h1,h2,h3{letter-spacing:-.035em;line-height:1.02;font-weight:700}
+h2{font-size:clamp(1.8rem,7.4vw,3.4rem)}
+.wrap{max-width:1180px;margin:0 auto;padding:0 16px}
+section{padding:64px 0;scroll-margin-top:68px}
+.lbl{font-family:var(--mono);font-size:.74rem;color:var(--lime);text-transform:uppercase;letter-spacing:.08em;display:inline-flex;align-items:center;gap:8px}
+.lbl:before{content:"";width:6px;height:6px;background:var(--lime);border-radius:2px}
+.muted{color:var(--muted)}
+.lime{color:var(--lime)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:50px;padding:0 22px;border-radius:14px;font:inherit;font-weight:600;text-decoration:none;border:0;cursor:pointer;transition:transform .2s,background .2s}
+.btn-l{background:var(--lime);color:#0a0a0a}.btn-l:hover{background:#d6ff4f;transform:translateY(-2px)}
+.btn-d{background:var(--s2);color:var(--ink);border:1px solid var(--line)}.btn-d:hover{border-color:#3a3a3a}
+/* header */
+header{position:sticky;top:0;z-index:50;background:rgba(10,10,10,.94);border-bottom:1px solid var(--line)}
+.hd{display:flex;align-items:center;justify-content:space-between;height:64px;gap:12px;position:relative}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;text-decoration:none;font-size:1.1rem;letter-spacing:-.03em}
+.logo svg{width:30px;height:30px}
+.burger{width:48px;height:48px;border-radius:14px;border:1px solid var(--line);background:var(--s1);color:var(--ink);cursor:pointer;display:grid;place-items:center}
+.burger svg{width:22px;height:22px;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+.burger .x{display:none}.burger[aria-expanded="true"] .x{display:block}.burger[aria-expanded="true"] .o{display:none}
+.nav{display:none;position:absolute;top:64px;left:-16px;right:-16px;background:var(--bg);border-bottom:1px solid var(--line);padding:8px 16px 20px;flex-direction:column;max-height:calc(100vh - 64px);overflow:auto}
+.nav.open{display:flex}
+.nav a{text-decoration:none;min-height:56px;display:flex;align-items:center;justify-content:space-between;font-size:1.25rem;font-weight:600;border-bottom:1px solid var(--line)}
+.nav a:after{content:"→";color:var(--muted);font-weight:400}
+.nav .btn{margin-top:16px;border:0;font-size:1rem}.nav .btn:after{content:none}
+/* hero */
+.hero{padding:32px 0 48px;position:relative}
+.hero:before{content:"";position:absolute;inset:0;background:linear-gradient(var(--line) 1px,transparent 1px) 0 0/48px 48px,linear-gradient(90deg,var(--line) 1px,transparent 1px) 0 0/48px 48px;opacity:.5;mask-image:radial-gradient(ellipse at 50% 0%,#000,transparent 70%);-webkit-mask-image:radial-gradient(ellipse at 50% 0%,#000,transparent 70%);pointer-events:none}
+.hero .wrap{position:relative}
+.status{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.74rem;padding:7px 12px;border-radius:99px;border:1px solid var(--line);background:var(--s1)}
+.status i{width:8px;height:8px;border-radius:50%;background:var(--lime);box-shadow:0 0 0 0 rgba(198,244,50,.6);animation:ping 2s infinite}
+@keyframes ping{to{box-shadow:0 0 0 10px rgba(198,244,50,0)}}
+.hero h1{font-size:clamp(2.1rem,10vw,6.4rem);margin:18px 0 16px;font-weight:800}
+.hero h1 span{color:var(--lime)}
+.hero .sub{display:grid;gap:22px}
+.hero .sub p{font-size:clamp(1rem,2.8vw,1.15rem);color:var(--muted);max-width:560px}
+.ctas{display:flex;flex-direction:column;gap:10px}
+/* product tabs */
+.prod{margin-top:40px;border:1px solid var(--line);background:var(--s1);border-radius:26px;overflow:hidden}
+.tabs{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--line)}
+.tabs button{min-height:52px;background:none;border:0;border-right:1px solid var(--line);color:var(--muted);font:inherit;font-weight:600;font-size:.9rem;cursor:pointer;position:relative}
+.tabs button:last-child{border-right:0}
+.tabs button[aria-selected="true"]{color:var(--ink);background:var(--s2)}
+.tabs button[aria-selected="true"]:after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--lime)}
+.tabs button:focus-visible{outline:2px solid var(--lime);outline-offset:-2px}
+.panel{padding:16px;display:grid;gap:12px}
+.panel[hidden]{display:none}
+.card{background:var(--bg);border:1px solid var(--line);border-radius:16px;padding:14px;min-width:0}
+.card h4{font-family:var(--mono);font-size:.68rem;font-weight:400;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;display:flex;justify-content:space-between;margin-bottom:10px}
+.ln{display:flex;align-items:center;gap:10px;padding:9px 0;border-top:1px solid var(--line);font-size:.86rem}
+.ln:first-of-type{border-top:0}
+.ln span{flex:1;min-width:0}
+.ln small{display:block;font-family:var(--mono);font-size:.68rem;color:var(--muted)}
+.chip{font-family:var(--mono);font-size:.66rem;padding:3px 8px;border-radius:6px;white-space:nowrap}
+.c1{background:var(--lime);color:#0a0a0a}.c2{background:#2a2a2a;color:var(--ink)}.c3{border:1px solid #3a3a3a;color:var(--muted)}
+.kpi{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.kpi b{font-size:2rem;font-weight:800;letter-spacing:-.04em;display:block}
+.kpi small{font-family:var(--mono);font-size:.68rem;color:var(--muted)}
+.grid-sq{display:grid;grid-template-columns:repeat(10,1fr);gap:4px}
+.grid-sq i{aspect-ratio:1;border-radius:3px;background:#222}
+.grid-sq i.d{background:var(--lime)}.grid-sq i.p{background:var(--lime2);opacity:.5}
+.bars{display:flex;align-items:flex-end;gap:6px;height:90px}
+.bars i{flex:1;background:#2a2a2a;border-radius:4px 4px 2px 2px;height:var(--h)}
+.bars i:last-child{background:var(--lime)}
+.files{display:flex;flex-wrap:wrap;gap:6px}
+.files span{font-family:var(--mono);font-size:.7rem;padding:6px 10px;border-radius:8px;border:1px solid var(--line)}
+/* ticker */
+.tick{border-block:1px solid var(--line);overflow:hidden;background:var(--s1)}
+.tick .row{display:flex;gap:40px;width:max-content;padding:18px 0;animation:mq 40s linear infinite}
+.tick span{font-family:var(--mono);font-size:.85rem;white-space:nowrap;color:var(--muted)}
+.tick b{color:var(--lime);font-family:'Geist';font-size:1.15rem;margin-right:6px}
+@keyframes mq{to{transform:translateX(-50%)}}
+/* services accordion */
+.acc-list{margin-top:30px;border-top:1px solid var(--line)}
+.it{border-bottom:1px solid var(--line)}
+.it button{width:100%;min-height:72px;display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;background:none;border:0;color:var(--ink);font:inherit;text-align:left;cursor:pointer;padding:12px 0}
+.it button .n{font-family:var(--mono);font-size:.74rem;color:var(--muted)}
+.it button .t{font-size:clamp(1.15rem,4.4vw,1.9rem);font-weight:700;letter-spacing:-.03em;line-height:1.15}
+.it button .pl{width:36px;height:36px;border-radius:10px;border:1px solid var(--line);display:grid;place-items:center;transition:transform .25s,background .25s}
+.it button[aria-expanded="true"] .pl{transform:rotate(45deg);background:var(--lime);color:#0a0a0a;border-color:var(--lime)}
+.it button:hover .t{color:var(--lime)}
+.it button:focus-visible{outline:2px solid var(--lime);outline-offset:2px}
+.it .bd{padding:0 0 22px 0;display:grid;gap:12px}
+.it .bd[hidden]{display:none}
+.it .bd p{color:var(--muted);max-width:640px}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tags span{font-family:var(--mono);font-size:.7rem;padding:5px 10px;border-radius:8px;background:var(--s2);border:1px solid var(--line)}
+/* engagement */
+.plans{display:grid;gap:12px;margin-top:30px}
+.plan{border:1px solid var(--line);background:var(--s1);border-radius:var(--r);padding:24px;display:flex;flex-direction:column;gap:12px}
+.plan.hot{background:var(--lime);color:#0a0a0a;border-color:var(--lime)}
+.plan.hot .muted{color:#2f3a0a}
+.plan h3{font-size:1.5rem}
+.plan .k{font-family:var(--mono);font-size:.7rem;text-transform:uppercase;letter-spacing:.06em}
+.plan ul{list-style:none;display:grid;gap:8px;font-size:.93rem}
+.plan li:before{content:"+ ";font-family:var(--mono)}
+/* why + stats */
+.why{display:grid;gap:28px;margin-top:56px}
+.wl{list-style:none;border-top:1px solid var(--line)}
+.wl li{display:flex;gap:14px;align-items:baseline;padding:16px 0;border-bottom:1px solid var(--line);font-size:1.05rem;font-weight:500}
+.wl li span{font-family:var(--mono);font-size:.72rem;color:var(--lime)}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stats div{border:1px solid var(--line);border-radius:18px;padding:18px;background:var(--s1)}
+.stats b{display:block;font-size:clamp(2rem,8vw,3.2rem);font-weight:800;letter-spacing:-.05em;line-height:1}
+.stats span{font-size:.85rem;color:var(--muted)}
+/* process */
+.proc{display:grid;gap:10px;margin-top:30px;counter-reset:p}
+.ps{border:1px solid var(--line);border-radius:var(--r);padding:22px;background:var(--s1);position:relative;overflow:hidden}
+.ps:before{counter-increment:p;content:"0" counter(p);position:absolute;right:16px;top:6px;font-size:4.5rem;font-weight:800;letter-spacing:-.06em;color:#1f1f1f;line-height:1}
+.ps h3{font-size:1.3rem;margin-bottom:6px;position:relative}
+.ps p{color:var(--muted);position:relative;max-width:90%}
+.ps .bar{height:4px;border-radius:4px;background:#222;margin-top:18px;overflow:hidden;position:relative}
+.ps .bar i{display:block;height:100%;width:var(--w);background:var(--lime)}
+/* projects */
+.pj{display:grid;gap:12px;margin-top:30px}
+.pc{border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--s1);display:flex;flex-direction:column}
+.pc .vis{height:120px;background:#0f0f0f;border-bottom:1px solid var(--line);position:relative}
+.pc .vis svg{position:absolute;inset:0;width:100%;height:100%}
+.pc .b{padding:20px}
+.pc h3{font-size:1.15rem;letter-spacing:-.02em;line-height:1.25;margin-bottom:6px}
+.pc p{color:var(--muted);font-size:.94rem}
+.note{font-family:var(--mono);font-size:.72rem;color:#6a6a63;margin-top:14px}
+/* sectors */
+.secs{margin-top:26px;display:flex;flex-wrap:wrap;gap:8px}
+.secs span{display:inline-flex;align-items:center;min-height:48px;padding:0 18px;border-radius:99px;border:1px solid var(--line);background:var(--s1);font-weight:600;font-size:clamp(.95rem,3.6vw,1.2rem)}
+.secs span:nth-child(odd){border-color:#3d4a12}
+/* trust */
+.trust{display:grid;gap:12px;margin-top:26px}
+.ph{border:1px dashed #333;border-radius:14px;min-height:64px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:10px;font-weight:600;font-size:.9rem}
+.ph small{font-family:var(--mono);font-size:.66rem;color:var(--muted);font-weight:400}
+.tgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.trust h3{font-family:var(--mono);font-size:.72rem;font-weight:400;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
+/* contact */
+.ct{display:grid;gap:28px}
+.cl{display:grid;gap:10px;margin-top:22px}
+.cl a,.cl div{display:flex;justify-content:space-between;align-items:center;gap:10px;min-height:56px;padding:0 16px;border:1px solid var(--line);border-radius:14px;background:var(--s1);text-decoration:none;font-weight:600}
+.cl small{font-family:var(--mono);font-size:.7rem;color:var(--muted);font-weight:400}
+form{border:1px solid var(--line);border-radius:26px;padding:20px;background:var(--s1)}
+.fg{display:grid;gap:14px}
+.f{display:flex;flex-direction:column;gap:6px}
+.f label{font-family:var(--mono);font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.f input,.f select,.f textarea{font:inherit;font-size:16px;min-height:52px;padding:12px 16px;border-radius:14px;border:1px solid var(--line);background:var(--bg);color:var(--ink);width:100%}
+.f textarea{min-height:120px}
+.f select option{background:#131313}
+.f input:focus,.f select:focus,.f textarea:focus{outline:none;border-color:var(--lime);box-shadow:0 0 0 3px rgba(198,244,50,.18)}
+form .btn{width:100%;margin-top:16px}
+.thx{display:none;padding:20px 0}
+.thx b{display:grid;place-items:center;width:56px;height:56px;border-radius:16px;background:var(--lime);color:#0a0a0a;font-size:1.5rem;margin-bottom:14px}
+form.done .fields{display:none}form.done .thx{display:block}
+footer{border-top:1px solid var(--line);padding:48px 0 40px;margin-top:30px}
+.big{font-size:clamp(3rem,17vw,11rem);font-weight:800;letter-spacing:-.07em;line-height:.85;color:#161616;margin-bottom:30px;overflow-wrap:anywhere}
+.ft{display:grid;gap:26px}
+footer h4{font-family:var(--mono);font-weight:400;font-size:.72rem;color:var(--muted);text-transform:uppercase;margin-bottom:6px}
+footer ul{list-style:none;display:grid}
+footer a{text-decoration:none}footer a:hover{color:var(--lime)}
+.lg{margin-top:30px;font-family:var(--mono);font-size:.72rem;color:#6a6a63}
+.pill{position:fixed;left:16px;bottom:16px;z-index:99;background:var(--lime);color:#0a0a0a;font-family:var(--mono);font-weight:500;font-size:.72rem;padding:7px 14px;border-radius:99px;text-decoration:none}
+.js .rv{opacity:0;transform:translateY(16px);transition:opacity .6s,transform .6s}
+.js .rv.in{opacity:1;transform:none}
+
+/* ------ larger screens (mobile-first) ------ */
+@media (min-width:600px){
+  .wrap{padding:0 24px}
+  .ctas{flex-direction:row}
+  .panel{grid-template-columns:1fr 1fr}
+  .plans,.pj{grid-template-columns:1fr 1fr}
+  .proc{grid-template-columns:1fr 1fr}
+  .stats{gap:12px}
+  .tgrid{grid-template-columns:repeat(4,1fr)}
+  .fg{grid-template-columns:1fr 1fr}.f.full{grid-column:1/-1}
+  .ft{grid-template-columns:2fr 1fr 1fr}
+  form{padding:28px}
+}
+@media (min-width:768px){
+  section{padding:100px 0}
+  .hero{padding:72px 0 80px}
+  .burger{display:none}
+  .nav{display:flex;position:static;flex-direction:row;align-items:center;gap:6px;background:none;border:0;padding:0;max-height:none;overflow:visible}
+  .nav a{font-size:.92rem;font-weight:500;min-height:44px;padding:0 12px;border:0;color:var(--muted)}
+  .nav a:hover{color:var(--ink)}
+  .nav a:after{content:none}
+  .nav .btn{margin:0 0 0 10px;color:#0a0a0a;min-height:44px}
+  .hero .sub{grid-template-columns:1.2fr 1fr;align-items:end}
+  .ctas{justify-content:flex-end}
+  .panel{padding:20px}
+}
+@media (min-width:1000px){
+  .panel{grid-template-columns:1.3fr 1fr 1fr}
+  .plans,.pj{grid-template-columns:repeat(3,1fr)}
+  .proc{grid-template-columns:repeat(4,1fr)}
+  .why{grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+  .ct{grid-template-columns:.9fr 1.1fr;gap:56px}
+  .it button{grid-template-columns:60px 1fr auto}
+  .it .bd{padding-left:74px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*:before,*:after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+  .tick .row{flex-wrap:wrap;width:auto;padding:18px 16px;gap:12px 28px}
+  .tick [aria-hidden]{display:none}
+  .js .rv{opacity:1;transform:none}
+}
+
+/* ---- mobile optimisation ---- */
+:root{--mb-bg:rgba(10,10,10,.94);--mb-line:#2e2e2e;--mb-fg:#f4f4ef;--mb-acc:#c6f432;--mb-accfg:#0a0a0a;--mb-r:14px}
+.mbar{display:none}
+.pill{bottom:calc(16px + env(safe-area-inset-bottom))}
+@media (max-width:767px){
+  body{padding-bottom:calc(78px + env(safe-area-inset-bottom))}
+  .mbar{display:grid;grid-template-columns:1fr 1.2fr;gap:8px;position:fixed;left:0;right:0;bottom:0;z-index:98;padding:10px max(12px,env(safe-area-inset-right)) calc(10px + env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left));background:var(--mb-bg);border-top:1px solid var(--mb-line);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+  .mbar a{min-height:50px;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:var(--mb-r);text-decoration:none;font-weight:700;font-size:.95rem;line-height:1.2;text-align:center}
+  .mbar .mc{border:1px solid var(--mb-line);color:var(--mb-fg)}
+  .mbar .mc small{font-weight:500;font-size:.74rem;opacity:.8}
+  .mbar .mqq{background:var(--mb-acc);color:var(--mb-accfg)}
+  .pill{left:max(12px,env(safe-area-inset-left));bottom:calc(84px + env(safe-area-inset-bottom));min-height:36px;display:inline-flex;align-items:center}
+  input,select,textarea{font-size:16px!important;min-height:48px}
+  textarea{min-height:110px}
+  button,.btn{min-height:48px}
+  footer li a{display:inline-flex;align-items:center;min-height:44px}
+  footer ul{gap:0!important}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap hd">
+    <a class="logo" href="#top"><svg viewBox="0 0 30 30" aria-hidden="true"><rect width="30" height="30" rx="9" fill="#c6f432"/><path d="M8 10h14M15 10v12" stroke="#0a0a0a" stroke-width="3.2" stroke-linecap="round"/></svg>tomhen</a>
+    <button class="burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav"><svg class="o" viewBox="0 0 24 24"><path d="M4 8h16M4 16h16"/></svg><svg class="x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <nav class="nav" id="nav" aria-label="Main">
+      <a href="#services">Services</a>
+      <a href="#engage">Engagement</a>
+      <a href="#process">Process</a>
+      <a href="#projects">Projects</a>
+      <a href="#sectors">Sectors</a>
+      <a class="btn btn-l" href="#contact">Request a quote</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+<section class="hero">
+  <div class="wrap">
+    <span class="status"><i></i>Teams available this week</span>
+    <h1>Infrastructure delivery, <span>on&nbsp;demand.</span></h1>
+    <div class="sub">
+      <p>People, surveys and project services for principal contractors, transport operators, public-sector bodies and engineering consultancies on London's rail, road and utility networks.</p>
+      <div class="ctas"><a class="btn btn-l" href="#contact">Request a quote →</a><a class="btn btn-d" href="#services">See services</a></div>
+    </div>
+
+    <div class="prod rv" aria-label="Illustrative product views">
+      <div class="tabs" role="tablist">
+        <button role="tab" id="t1" aria-controls="p1" aria-selected="true">Mobilise</button>
+        <button role="tab" id="t2" aria-controls="p2" aria-selected="false" tabindex="-1">Survey</button>
+        <button role="tab" id="t3" aria-controls="p3" aria-selected="false" tabindex="-1">Report</button>
+      </div>
+      <div class="panel" role="tabpanel" id="p1" aria-labelledby="t1">
+        <div class="card">
+          <h4>Crew status <span class="lime">● live</span></h4>
+          <div class="ln"><span>Site supervisor ×2<small>night possession · SE1</small></span><span class="chip c1">on site</span></div>
+          <div class="ln"><span>Setting-out engineer<small>utility diversion · E14</small></span><span class="chip c2">inducted</span></div>
+          <div class="ln"><span>Operatives ×6<small>resurfacing · SW9</small></span><span class="chip c3">en route</span></div>
+        </div>
+        <div class="card kpi"><div><b>18h</b><small>brief → on site</small></div><div><b class="lime">100%</b><small>inducted</small></div></div>
+        <div class="card"><h4>Compliance <span>3/3</span></h4><div class="files"><span>✓ RAMS</span><span>✓ Inductions</span><span>✓ Competence</span></div></div>
+      </div>
+      <div class="panel" role="tabpanel" id="p2" aria-labelledby="t2" hidden>
+        <div class="card">
+          <h4>Zone B · measured survey <span class="lime">68%</span></h4>
+          <div class="grid-sq" aria-hidden="true"><i class="d"></i><i class="d"></i><i class="d"></i><i class="d"></i><i class="d"></i><i class="d"></i><i class="d"></i><i class="d"></i><i class="d"></i><i class="d"></i><i class="d"></i><i class="d"></i><i class="d"></i><i class="d"></i><i class="d"></i><i class="d"></i><i class="d"></i><i class="d"></i><i class="d"></i><i class="d"></i><i class="d"></i><i class="d"></i><i class="d"></i><i class="d"></i><i class="d"></i><i class="d"></i><i class="d"></i><i class="p"></i><i class="p"></i><i class="p"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        </div>
+        <div class="card"><h4>Methods</h4><div class="files"><span>Topographic</span><span>GPR</span><span>Utility</span><span>Setting out</span></div></div>
+        <div class="card kpi"><div><b>412</b><small>points today</small></div><div><b>0</b><small>open issues</small></div></div>
+      </div>
+      <div class="panel" role="tabpanel" id="p3" aria-labelledby="t3" hidden>
+        <div class="card"><h4>Shifts delivered · 8 wks</h4><div class="bars" aria-hidden="true"><i style="--h:35%"></i><i style="--h:50%"></i><i style="--h:44%"></i><i style="--h:62%"></i><i style="--h:58%"></i><i style="--h:74%"></i><i style="--h:70%"></i><i style="--h:92%"></i></div></div>
+        <div class="card"><h4>Handover pack</h4><div class="files"><span>.dwg</span><span>.shp</span><span>.ifc</span><span>.xlsx</span><span>.pdf</span></div></div>
+        <div class="card kpi"><div><b>Wk 42</b><small>report issued</small></div><div><b class="lime">✓</b><small>clean data</small></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Stats in ticker are PLACEHOLDERS: replace with verified figures -->
+<div class="tick" aria-label="Key figures (placeholders)">
+  <div class="row">
+    <span><b>15+</b>years' combined experience</span><span><b>200+</b>projects supported</span><span><b>24/7</b>mobilisation</span><span><b>100%</b>vetted personnel</span><span><b>48h</b>proposal turnaround</span>
+    <span aria-hidden="true"><b>15+</b>years' combined experience</span><span aria-hidden="true"><b>200+</b>projects supported</span><span aria-hidden="true"><b>24/7</b>mobilisation</span><span aria-hidden="true"><b>100%</b>vetted personnel</span><span aria-hidden="true"><b>48h</b>proposal turnaround</span>
+  </div>
+</div>
+
+<section id="services">
+  <div class="wrap">
+    <span class="lbl">Services</span>
+    <h2 style="margin-top:14px">Six services.<br><span class="muted">One accountable contact.</span></h2>
+    <div class="acc-list">
+      <div class="it"><button aria-expanded="true" aria-controls="s1"><span class="n">01</span><span class="t">Subcontract delivery</span><span class="pl">+</span></button><div class="bd" id="s1"><p>Labour, supervision and plant packages delivered to your scope, programme and safety standards.</p><div class="tags"><span>labour</span><span>supervision</span><span>plant</span></div></div></div>
+      <div class="it"><button aria-expanded="false" aria-controls="s2"><span class="n">02</span><span class="t">Contract &amp; interim staff</span><span class="pl">+</span></button><div class="bd" id="s2" hidden><p>Engineers, project managers, site supervisors, planners and skilled operatives, on day rate or fixed term.</p><div class="tags"><span>day rate</span><span>fixed term</span></div></div></div>
+      <div class="it"><button aria-expanded="false" aria-controls="s3"><span class="n">03</span><span class="t">Surveying</span><span class="pl">+</span></button><div class="bd" id="s3" hidden><p>Topographic, measured building, utility and GPR, rail and track asset, condition and dilapidation surveys, plus setting out.</p><div class="tags"><span>topo</span><span>measured building</span><span>GPR</span><span>rail asset</span><span>setting out</span></div></div></div>
+      <div class="it"><button aria-expanded="false" aria-controls="s4"><span class="n">04</span><span class="t">Outsourced project services</span><span class="pl">+</span></button><div class="bd" id="s4" hidden><p>Planning, document control, commercial/QS support and CDM and H&amp;S coordination.</p><div class="tags"><span>planning</span><span>doc control</span><span>QS</span><span>CDM</span></div></div></div>
+      <div class="it"><button aria-expanded="false" aria-controls="s5"><span class="n">05</span><span class="t">Site &amp; works management</span><span class="pl">+</span></button><div class="bd" id="s5" hidden><p>Experienced supervisors and managers who run packages day to day and report back to you.</p></div></div>
+      <div class="it"><button aria-expanded="false" aria-controls="s6"><span class="n">06</span><span class="t">Inspection &amp; asset data</span><span class="pl">+</span></button><div class="bd" id="s6" hidden><p>Asset inspections, defect logging and clean data handed over in your formats (CAD, GIS, BIM, spreadsheets).</p><div class="tags"><span>CAD</span><span>GIS</span><span>BIM</span><span>XLSX</span></div></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="engage" style="padding-top:0">
+  <div class="wrap">
+    <span class="lbl">Engagement</span>
+    <h2 style="margin-top:14px">Flexible terms that fit your contract.</h2>
+    <div class="plans">
+      <div class="plan rv"><span class="k muted">Model 01</span><h3>Day rate</h3><p class="muted">Add people to your team for as long as you need them.</p><ul><li>Engineers, supervisors, operatives</li><li>Scale up or down weekly</li><li>Timesheets &amp; daily reports</li></ul></div>
+      <div class="plan hot rv"><span class="k">Model 02 · most common</span><h3>Fixed price</h3><p class="muted">A defined scope, delivered to programme for an agreed price.</p><ul><li>Clear proposal within 48 hours</li><li>One accountable point of contact</li><li>Clean handover in your formats</li></ul></div>
+      <div class="plan rv"><span class="k muted">Model 03</span><h3>Call-off / framework</h3><p class="muted">Pre-agreed rates, so you can mobilise without re-tendering.</p><ul><li>24/7 mobilisation</li><li>Night &amp; possession working</li><li>Weekly reporting</li></ul></div>
+    </div>
+
+    <div class="why" id="why">
+      <div>
+        <span class="lbl">Why us</span>
+        <h2 style="margin-top:14px;font-size:clamp(1.6rem,6vw,2.6rem)">Skilled people. Accurate data. Delivered on programme.</h2>
+      </div>
+      <div>
+        <ul class="wl">
+          <li><span>01</span>One accountable point of contact</li>
+          <li><span>02</span>Rapid mobilisation, including night and possession working</li>
+          <li><span>03</span>Safety-trained, compliance-ready teams</li>
+          <li><span>04</span>Flexible engagement: day rate, fixed price, call-off</li>
+          <li><span>05</span>Transparent reporting and clean data handover</li>
+        </ul>
+        <!-- Stats are PLACEHOLDERS: replace with verified figures before going live -->
+        <div class="stats" style="margin-top:20px">
+          <div><b>15+</b><span>years' combined experience</span></div>
+          <div><b class="lime">200+</b><span>projects supported</span></div>
+          <div><b class="lime">24/7</b><span>mobilisation</span></div>
+          <div><b>100%</b><span>vetted personnel</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="process" style="padding-top:0">
+  <div class="wrap">
+    <span class="lbl">How we work</span>
+    <h2 style="margin-top:14px">Brief to handover.</h2>
+    <div class="proc">
+      <div class="ps rv" style="--w:25%"><h3>Brief</h3><p>Tell us the scope, location, access constraints and deadline.</p><div class="bar"><i></i></div></div>
+      <div class="ps rv" style="--w:50%"><h3>Scope &amp; price</h3><p>A clear proposal within 48 hours, on day-rate, fixed-price or framework terms.</p><div class="bar"><i></i></div></div>
+      <div class="ps rv" style="--w:75%"><h3>Mobilise</h3><p>Vetted, inducted and competent people on site, fast.</p><div class="bar"><i></i></div></div>
+      <div class="ps rv" style="--w:100%"><h3>Deliver &amp; report</h3><p>One point of contact, daily or weekly reporting, and clean handover.</p><div class="bar"><i></i></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="projects" style="padding-top:0">
+  <div class="wrap">
+    <span class="lbl">Example projects</span>
+    <h2 style="margin-top:14px">Typical scopes.</h2>
+    <div class="pj">
+      <article class="pc rv"><div class="vis"><svg viewBox="0 0 300 120" aria-hidden="true"><g fill="none" stroke="#c6f432" stroke-width="1.5"><rect x="80" y="22" width="140" height="76" rx="4"/><path d="M80 52h140M127 22v76M173 22v76"/></g></svg></div><div class="b"><h3>Station access improvements, Central London</h3><p>Measured building survey plus site supervision during overnight works.</p></div></article>
+      <article class="pc rv"><div class="vis"><svg viewBox="0 0 300 120" aria-hidden="true"><path d="M0 90 C80 40 170 120 300 45" fill="none" stroke="#c6f432" stroke-width="2" stroke-dasharray="8 7"/><g fill="#c6f432"><circle cx="60" cy="70" r="3"/><circle cx="150" cy="82" r="3"/><circle cx="240" cy="62" r="3"/></g></svg></div><div class="b"><h3>Highway resurfacing programme, South London</h3><p>Subcontract labour and traffic-management coordination across 40 sites.</p></div></article>
+      <article class="pc rv"><div class="vis"><svg viewBox="0 0 300 120" aria-hidden="true"><g fill="none" stroke-width="1.5"><path d="M0 34h300" stroke="#333"/><path d="M0 68h120l28 20h152" stroke="#c6f432" stroke-width="2"/><path d="M0 102h300" stroke="#333" stroke-dasharray="3 6"/></g></svg></div><div class="b"><h3>Utility diversion, East London</h3><p>GPR and utility survey, setting out, and outsourced document control.</p></div></article>
+    </div>
+    <p class="note">// illustrative examples of typical scopes, not client case studies</p>
+  </div>
+</section>
+
+<section id="sectors" style="padding-top:0">
+  <div class="wrap">
+    <span class="lbl">Sectors</span>
+    <div class="secs">
+      <span>Rail &amp; Underground</span><span>Highways &amp; Streets</span><span>Utilities</span><span>Stations &amp; Buildings</span><span>Local Authority &amp; Public Sector</span>
+    </div>
+    <div class="trust">
+      <div>
+        <h3>Accreditations</h3>
+        <div class="tgrid">
+          <!-- Placeholder: replace with a real accreditation actually held -->
+          <div class="ph">Accreditation<small>placeholder</small></div>
+          <!-- Placeholder: replace with a real safety scheme actually held -->
+          <div class="ph">Safety scheme<small>placeholder</small></div>
+          <!-- Placeholder: replace with a real supplier registration actually held -->
+          <div class="ph">Supplier registration<small>placeholder</small></div>
+          <!-- Placeholder: replace with a real ISO standard actually held -->
+          <div class="ph">ISO standard<small>placeholder</small></div>
+        </div>
+      </div>
+      <div>
+        <h3>Clients</h3>
+        <div class="tgrid"><div class="ph">Client logo<small>placeholder</small></div><div class="ph">Client logo<small>placeholder</small></div><div class="ph">Client logo<small>placeholder</small></div><div class="ph">Client logo<small>placeholder</small></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" style="padding-top:0">
+  <div class="wrap ct">
+    <div>
+      <span class="lbl">Request a quote</span>
+      <h2 style="margin-top:14px">Get a team moving.</h2>
+      <p class="muted" style="margin-top:14px;max-width:460px">Tell us the scope, location, access constraints and deadline. A clear proposal within 48 hours.</p>
+      <div class="cl">
+        <a href="tel:02000000000"><small>Call</small>020 0000 0000</a>
+        <a href="mailto:hello@example.co.uk"><small>Email</small>hello@example.co.uk</a>
+        <div><small>Coverage</small>London &amp; SE · UK-wide</div>
+      </div>
+    </div>
+    <form id="quote" novalidate>
+      <div class="fields">
+        <div class="fg">
+          <div class="f"><label for="n">Name</label><input id="n" name="name" autocomplete="name"></div>
+          <div class="f"><label for="c">Company</label><input id="c" name="company" autocomplete="organization"></div>
+          <div class="f"><label for="e">Email</label><input id="e" name="email" type="email" inputmode="email" autocomplete="email"></div>
+          <div class="f"><label for="p">Phone</label><input id="p" name="phone" type="tel" inputmode="tel" autocomplete="tel"></div>
+          <div class="f full"><label for="m">Engagement</label><select id="m" name="model"><option>Day rate</option><option>Fixed price</option><option>Call-off / framework</option><option>Not sure yet</option></select></div>
+          <div class="f full"><label for="b">Brief</label><textarea id="b" name="brief" rows="4" placeholder="Scope, location, access constraints, deadline"></textarea></div>
+        </div>
+        <button class="btn btn-l" type="submit">Request a quote →</button>
+      </div>
+      <div class="thx" role="status" aria-live="polite"><b>✓</b><h3>Thanks, request received.</h3><p class="muted" style="margin-top:6px">Demo form only, nothing was sent. On the live site we'd reply within 48 hours.</p></div>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="big" aria-hidden="true">tomhen</div>
+    <div class="ft">
+      <div><b>Tomhen Services</b><p class="muted" style="margin-top:6px;max-width:360px;font-size:.92rem">Contract delivery, surveying and specialist support for infrastructure clients.</p></div>
+      <div><h4>Site</h4><ul><li><a href="#services">Services</a></li><li><a href="#engage">Engagement</a></li><li><a href="#process">Process</a></li><li><a href="#projects">Projects</a></li><li><a href="#contact">Contact</a></li></ul></div>
+      <div><h4>Contact</h4><ul><li><a href="tel:02000000000">020 0000 0000</a></li><li><a href="mailto:hello@example.co.uk">hello@example.co.uk</a></li><li class="muted">[Registered address]</li></ul></div>
+    </div>
+    <p class="lg">© Tomhen Services Ltd · company no. [00000000] · [Registered address]</p>
+  </div>
+</footer>
+<nav class="mbar" aria-label="Quick actions"><a class="mc" href="tel:02000000000">Call<small>020 0000 0000</small></a><a class="mqq" href="#contact">Request a quote</a></nav>
+<a class="pill" href="../index.html" title="Back to shortlist" aria-label="Back to shortlist">Option 7 · Back to shortlist</a>
+<script>
+(function(){
+  var b=document.querySelector('.burger'),n=document.getElementById('nav');
+  function set(o){n.classList.toggle('open',o);b.setAttribute('aria-expanded',o)}
+  b.addEventListener('click',function(){set(!n.classList.contains('open'))});
+  n.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){set(false)})});
+  // tabs
+  var tabs=[].slice.call(document.querySelectorAll('[role=tab]'));
+  function sel(t){tabs.forEach(function(x){var on=x===t;x.setAttribute('aria-selected',on);x.tabIndex=on?0:-1;document.getElementById(x.getAttribute('aria-controls')).hidden=!on});}
+  tabs.forEach(function(t,i){t.addEventListener('click',function(){sel(t)});t.addEventListener('keydown',function(e){var d=e.key==='ArrowRight'?1:e.key==='ArrowLeft'?-1:0;if(d){var nx=tabs[(i+d+tabs.length)%tabs.length];sel(nx);nx.focus()}})});
+  // accordion
+  document.querySelectorAll('.it button').forEach(function(btn){btn.addEventListener('click',function(){var o=btn.getAttribute('aria-expanded')!=='true';btn.setAttribute('aria-expanded',o);document.getElementById(btn.getAttribute('aria-controls')).hidden=!o})});
+  var f=document.getElementById('quote');f.addEventListener('submit',function(e){e.preventDefault();f.classList.add('done')});
+  if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&'IntersectionObserver' in window){
+    document.documentElement.classList.add('js');
+    var io=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}})},{threshold:.1});
+    document.querySelectorAll('.rv').forEach(function(el){io.observe(el)});
+  }
+})();
+</script>
+</body>
+</html>

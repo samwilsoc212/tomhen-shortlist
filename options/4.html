@@ -1,0 +1,458 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tomhen Services</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=IBM+Plex+Sans:wght@300;400;500&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --white:#fdfcfa; --tint:#f5f1ee; --ink:#191716; --ink-2:#55504c; --muted:#9a938e; --rule:#e4ddd8; --brick:#9c3b2a;
+  --serif:"Playfair Display", Georgia, serif; --sans:"IBM Plex Sans", system-ui, sans-serif; --mono:"IBM Plex Mono", ui-monospace, monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{background:var(--white);color:var(--ink);font-family:var(--sans);font-weight:300;font-size:17px;line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+strong,b{font-weight:500}
+.wrap{max-width:1320px;margin:0 auto;padding:0 clamp(20px,4vw,48px)}
+.mono{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+section{scroll-margin-top:70px}
+
+/* Header: thin masthead */
+.top{position:sticky;top:0;z-index:60;background:var(--white);border-bottom:1px solid var(--ink)}
+.top .wrap{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:66px;gap:20px}
+.top nav ul{display:flex;gap:26px;list-style:none;font-size:14px}
+.top nav a:hover{color:var(--brick)}
+.logo{font-family:var(--serif);font-size:24px;font-weight:700;letter-spacing:-.01em;text-align:center}
+.logo span{color:var(--brick)}
+.right{display:flex;justify-content:flex-end;align-items:center;gap:20px}
+.cta{font-size:14px;font-weight:500;border-bottom:1px solid var(--brick);color:var(--brick);padding-bottom:2px}
+.cta:hover{color:var(--ink);border-color:var(--ink)}
+.tog{display:none;background:none;border:0;font:500 13px var(--sans);letter-spacing:.06em;text-transform:uppercase;cursor:pointer;color:var(--ink);padding:10px 0}
+.overlay{position:fixed;inset:0;background:var(--brick);color:var(--white);z-index:70;padding:24px clamp(20px,4vw,48px);display:flex;flex-direction:column;opacity:0;pointer-events:none;transition:opacity .3s}
+.overlay.on{opacity:1;pointer-events:auto}
+.overlay .x{align-self:flex-end;background:none;border:0;color:var(--white);font:500 13px var(--sans);letter-spacing:.06em;text-transform:uppercase;cursor:pointer;padding:10px 0}
+.overlay a{font-family:var(--serif);font-size:clamp(36px,10vw,56px);line-height:1.25;font-style:italic}
+.overlay nav{margin-top:auto;margin-bottom:auto;display:flex;flex-direction:column}
+
+/* Hero asymmetric */
+.hero{padding:clamp(40px,6vw,80px) 0 clamp(60px,8vw,110px);border-bottom:1px solid var(--rule)}
+.hero .wrap{display:grid;grid-template-columns:260px 1fr;gap:clamp(32px,5vw,80px)}
+.toc{border-top:1px solid var(--ink);padding-top:16px;align-self:start}
+.toc h2{font-family:var(--mono);font-weight:400;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+.toc ol{list-style:none;counter-reset:t}
+.toc li{counter-increment:t;border-bottom:1px solid var(--rule)}
+.toc a{display:flex;gap:14px;padding:10px 0;font-size:15px;transition:color .2s}
+.toc a::before{content:counter(t,decimal-leading-zero);font-family:var(--mono);font-size:11px;color:var(--brick);padding-top:4px}
+.toc a:hover{color:var(--brick)}
+.hero-main .kicker{display:flex;gap:16px;align-items:center;margin-bottom:28px}
+.hero-main .kicker i{flex:0 0 40px;height:1px;background:var(--brick)}
+.hero h1{font-family:var(--serif);font-weight:400;font-size:clamp(42px,6.6vw,104px);line-height:1.02;letter-spacing:-.02em;max-width:13ch}
+.hero h1 em{color:var(--brick)}
+.hero-cols{display:grid;grid-template-columns:1.3fr 1fr;gap:clamp(28px,4vw,64px);margin-top:clamp(36px,5vw,64px);align-items:start}
+.dropcap::first-letter{font-family:var(--serif);float:left;font-size:88px;line-height:.8;padding:8px 12px 0 0;color:var(--brick)}
+.hero-cols p{color:var(--ink-2)}
+.hero-art{border:1px solid var(--rule);background:var(--tint);aspect-ratio:4/3;position:relative}
+.hero-art svg{width:100%;height:100%}
+.hero-art figcaption{position:absolute;left:0;top:100%;padding-top:8px;font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:var(--muted);text-transform:uppercase}
+.btns{display:flex;gap:14px;flex-wrap:wrap;margin-top:28px}
+.btn{display:inline-block;padding:14px 26px;font:500 14px var(--sans);letter-spacing:.02em;border:1px solid var(--ink);background:var(--ink);color:var(--white);cursor:pointer;transition:background .2s,border-color .2s}
+.btn:hover{background:var(--brick);border-color:var(--brick)}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn.ghost:hover{color:var(--white)}
+
+/* Section header */
+.pad{padding:clamp(72px,9vw,130px) 0}
+.sh{display:grid;grid-template-columns:260px 1fr;gap:clamp(32px,5vw,80px);margin-bottom:clamp(40px,5vw,72px)}
+.sh .mono{border-top:1px solid var(--ink);padding-top:14px;align-self:start}
+.sh h2{font-family:var(--serif);font-weight:400;font-size:clamp(34px,4.6vw,64px);line-height:1.05;letter-spacing:-.015em;max-width:18ch}
+.sh h2 em{color:var(--brick)}
+
+/* Features (projects first) */
+.feature{display:grid;grid-template-columns:260px 1fr 1fr;gap:clamp(32px,5vw,80px);padding:44px 0;border-top:1px solid var(--rule);align-items:start}
+.feature:last-child{border-bottom:1px solid var(--rule)}
+.feature .no{font-family:var(--serif);font-size:clamp(80px,9vw,140px);line-height:.8;color:var(--brick);font-weight:400}
+.feature h3{font-family:var(--serif);font-weight:400;font-size:clamp(28px,3vw,40px);line-height:1.1;margin:10px 0 14px}
+.feature p{color:var(--ink-2)}
+.feature .vis{aspect-ratio:3/2;background:var(--tint);border:1px solid var(--rule)}
+.feature .vis svg{width:100%;height:100%}
+.feature .tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.feature .tags span{font-size:12px;border:1px solid var(--rule);padding:3px 10px;border-radius:99px;color:var(--ink-2)}
+.feature:nth-child(even) .vis{order:-1;grid-column:2}
+.feature:nth-child(even) .txt{grid-column:3;grid-row:1}
+
+/* Services two-col */
+.services{background:var(--tint)}
+.svc-cols{display:grid;grid-template-columns:260px 1fr;gap:clamp(32px,5vw,80px)}
+.svc-grid{display:grid;grid-template-columns:1fr 1fr;column-gap:clamp(32px,5vw,72px)}
+.svc{padding:28px 0;border-top:1px solid var(--ink)}
+.svc .mono{color:var(--brick)}
+.svc h3{font-family:var(--serif);font-weight:500;font-size:26px;line-height:1.2;margin:8px 0 8px}
+.svc p{color:var(--ink-2);font-size:16px}
+.pull{font-family:var(--serif);font-style:italic;font-size:clamp(24px,2.4vw,32px);line-height:1.3;color:var(--brick);border-top:3px solid var(--brick);padding-top:20px;position:sticky;top:100px}
+
+/* Sectors as sentence */
+.sectors-line{font-family:var(--serif);font-size:clamp(30px,4.6vw,66px);line-height:1.22;letter-spacing:-.01em}
+.sectors-line span{white-space:normal}
+.sectors-line i{color:var(--brick);font-style:normal;padding:0 .2em}
+.sectors-line em{color:var(--muted);font-size:.55em}
+
+/* Why + stats */
+.why{border-top:1px solid var(--rule)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);margin-bottom:clamp(56px,7vw,96px)}
+.stat{padding:36px 24px 30px;border-left:1px solid var(--rule)}
+.stat:first-child{border-left:0;padding-left:0}
+.stat b{display:block;font-family:var(--serif);font-weight:400;font-size:clamp(56px,7vw,112px);line-height:.9;color:var(--brick);letter-spacing:-.02em}
+.stat span{font-size:14px;color:var(--ink-2)}
+.why-list{display:grid;grid-template-columns:repeat(5,1fr);gap:24px;list-style:none}
+.why-list li{font-size:16px;line-height:1.5;padding-top:14px;border-top:1px solid var(--ink)}
+.why-list li b{display:block;font-family:var(--serif);font-weight:400;font-size:22px;line-height:1.2;margin-bottom:6px}
+
+/* Process timeline */
+.timeline{list-style:none;position:relative}
+.timeline::before{content:"";position:absolute;left:0;right:0;top:9px;height:1px;background:var(--ink)}
+.timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:32px}
+.timeline li{position:relative;padding-top:40px}
+.timeline li::before{content:"";position:absolute;left:0;top:3px;width:13px;height:13px;border-radius:50%;background:var(--white);border:1px solid var(--brick)}
+.timeline li:first-child::before{background:var(--brick)}
+.timeline h3{font-family:var(--serif);font-weight:400;font-size:30px;margin:6px 0 8px}
+.timeline p{color:var(--ink-2);font-size:16px}
+
+/* Accreditations */
+.acc{padding:44px 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.acc .wrap{display:grid;grid-template-columns:260px 1fr;gap:clamp(32px,5vw,80px);align-items:center}
+.badges{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.badges div{background:var(--white);padding:22px 12px;text-align:center;font-size:13px;color:var(--muted)}
+.badges.cl{grid-template-columns:repeat(5,1fr);margin-top:12px}
+.badges.cl div{font-family:var(--serif);font-style:italic;font-size:15px}
+
+/* Contact */
+.contact .grid{display:grid;grid-template-columns:260px 1fr 1.3fr;gap:clamp(32px,5vw,80px)}
+.contact h2{font-family:var(--serif);font-weight:400;font-size:clamp(36px,4.4vw,60px);line-height:1.05;margin-bottom:20px}
+.contact h2 em{color:var(--brick)}
+.contact address{font-style:normal;margin-top:28px;font-size:16px;line-height:2}
+.contact address b{font-weight:500}
+.fld{margin-bottom:22px}
+.fld label{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.fld input,.fld select,.fld textarea{width:100%;padding:12px 14px;border:1px solid var(--rule);background:var(--white);font:16px var(--sans);color:var(--ink);border-radius:0}
+.fld input:focus,.fld select:focus,.fld textarea:focus{outline:2px solid var(--brick);outline-offset:-1px;border-color:var(--brick)}
+.fld textarea{min-height:120px;resize:vertical}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.thanks{display:none;border-top:3px solid var(--brick);padding-top:24px}
+.thanks h3{font-family:var(--serif);font-size:40px;font-weight:400;font-style:italic;color:var(--brick)}
+form.sent{display:none}
+form.sent + .thanks{display:block}
+
+footer{background:var(--ink);color:#bdb6b0;padding:56px 0 96px;font-size:14px}
+footer .grid{display:grid;grid-template-columns:260px 1fr 1fr 1fr;gap:clamp(32px,5vw,80px)}
+footer .logo{text-align:left;color:var(--white)}
+footer h4{font-family:var(--mono);font-weight:400;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#7d7672;margin-bottom:10px}
+footer ul{list-style:none}
+footer a:hover{color:var(--white)}
+.legal{margin-top:44px;padding-top:18px;border-top:1px solid #34302e;font-size:12px;color:#7d7672}
+
+.vpill{position:fixed;left:16px;bottom:16px;z-index:65;background:var(--brick);color:var(--white);font:500 12px var(--sans);letter-spacing:.04em;padding:8px 14px;border-radius:999px;box-shadow:0 6px 18px rgba(0,0,0,.18)}
+
+@media (max-width:1040px){
+  .top .wrap{grid-template-columns:1fr auto}
+  .top nav,.right .cta{display:none}
+  .logo{text-align:left}
+  .tog{display:block}
+  .hero .wrap,.sh,.svc-cols,.acc .wrap{grid-template-columns:1fr}
+  .toc{display:none}
+  .hero-cols{grid-template-columns:1fr}
+  .hero-art{margin-bottom:24px}
+  .feature{grid-template-columns:1fr 1fr;gap:24px}
+  .feature .no{grid-column:1/-1}
+  .feature:nth-child(even) .vis{order:0;grid-column:auto}
+  .feature:nth-child(even) .txt{grid-column:auto;grid-row:auto}
+  .pull{position:static;margin-bottom:12px}
+  .stats{grid-template-columns:1fr 1fr}
+  .stat:nth-child(3){border-left:0;padding-left:0}
+  .stat:nth-child(n+3){border-top:1px solid var(--rule)}
+  .why-list{grid-template-columns:1fr 1fr}
+  .timeline{grid-template-columns:1fr;gap:0}
+  .timeline::before{left:6px;right:auto;top:0;bottom:0;width:1px;height:auto}
+  .timeline li{padding:0 0 32px 40px}
+  .contact .grid{grid-template-columns:1fr}
+  footer .grid{grid-template-columns:1fr 1fr}
+}
+@media (max-width:620px){
+  .feature{grid-template-columns:1fr}
+  .svc-grid{grid-template-columns:1fr}
+  .why-list{grid-template-columns:1fr}
+  .badges{grid-template-columns:1fr 1fr}
+  .badges.cl{grid-template-columns:1fr 1fr}
+  .two{grid-template-columns:1fr;gap:0}
+  .stat{padding:24px 12px 20px}
+  .stat b{font-size:52px}
+  footer .grid{grid-template-columns:1fr}
+  .dropcap::first-letter{font-size:68px}
+}
+
+/* ---- Mobile action bar + pill ---- */
+.vpill{display:inline-flex;align-items:center;min-height:36px;bottom:calc(16px + env(safe-area-inset-bottom))}
+.mbar{display:none}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+@media (max-width:767px){
+  body{padding-bottom:calc(66px + env(safe-area-inset-bottom))}
+  .mbar{display:grid;grid-template-columns:1fr 1fr;gap:8px;position:fixed;left:0;right:0;bottom:0;z-index:68;background:var(--white);border-top:1px solid var(--rule);padding:8px max(12px,env(safe-area-inset-left)) calc(8px + env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-right))}
+  .mbar a{min-height:48px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;font-family:var(--sans);font-size:14px;font-weight:600;line-height:1.2;border-radius:4px}
+  .mbar .call{border:1px solid var(--ink);color:var(--ink)}
+  .mbar .call small{font-size:12px;font-weight:400;opacity:.8}
+  .mbar .q{background:var(--brick);color:var(--white)}
+  .vpill{min-height:44px;left:12px;bottom:calc(74px + env(safe-area-inset-bottom));font-size:11px;padding:0 14px}
+}
+
+@media (max-width:767px){
+  .tog,.overlay .x{min-height:44px;min-width:56px}
+  .overlay{padding-top:calc(12px + env(safe-area-inset-top));padding-bottom:calc(24px + env(safe-area-inset-bottom))}
+  .overlay a{padding:4px 0;font-size:clamp(32px,9vw,44px)}
+  .hero{padding:28px 0 56px}
+  .hero-main .kicker{margin-bottom:16px}
+  .hero h1{font-size:clamp(32px,9.6vw,40px);line-height:1.06}
+  .hero-cols{margin-top:20px}
+  .hero-cols>div:first-child{display:flex;flex-direction:column}
+  .btns{order:-1;margin:0 0 24px}
+  .btn{min-height:48px;text-align:center;flex:1 1 140px}
+  .dropcap::first-letter{font-size:56px}
+  .hero-cols p{font-size:16px}
+  .hero-art{aspect-ratio:16/10}
+  .sh h2{font-size:clamp(30px,8.6vw,40px)}
+  .feature{padding:32px 0}
+  .feature .no{font-size:60px}
+  .sectors-line{font-size:clamp(26px,7.4vw,32px)}
+  .stat b{font-size:clamp(40px,12vw,52px)}
+  .timeline h3{font-size:26px}
+  footer li a{display:inline-block;padding:10px 0}
+  .fld input,.fld select,.fld textarea{font-size:16px}
+}
+</style>
+</head>
+<body>
+
+<header class="top" id="top">
+  <div class="wrap">
+    <nav aria-label="Primary"><ul>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#sectors">Sectors</a></li>
+      <li><a href="#process">Process</a></li>
+    </ul></nav>
+    <a href="#top" class="logo">Tomhen<span>.</span></a>
+    <div class="right">
+      <a href="#contact" class="cta">Request a quote</a>
+      <button class="tog" aria-expanded="false" aria-controls="ov">Menu</button>
+    </div>
+  </div>
+</header>
+<div class="overlay" id="ov" aria-hidden="true">
+  <button class="x">Close</button>
+  <nav aria-label="Mobile">
+    <a href="#work">Work</a><a href="#services">Services</a><a href="#sectors">Sectors</a><a href="#why">Why us</a><a href="#process">Process</a><a href="#contact">Request a quote</a>
+  </nav>
+  <span class="mono" style="color:#f0d6cf">020 0000 0000 · hello@example.co.uk</span>
+</div>
+
+<main>
+<section class="hero">
+  <div class="wrap">
+    <aside class="toc">
+      <h2>In this issue</h2>
+      <ol>
+        <li><a href="#work">Selected work</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#sectors">Sectors</a></li>
+        <li><a href="#why">Why Tomhen</a></li>
+        <li><a href="#process">How we work</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ol>
+    </aside>
+    <div class="hero-main">
+      <div class="kicker"><i></i><span class="mono">Subcontract · Surveying · Outsourced services</span></div>
+      <h1>Contract delivery, surveying &amp; <em>specialist support</em> for infrastructure.</h1>
+      <div class="hero-cols">
+        <div>
+          <p class="dropcap">We are an independent subcontractor and outsourcing partner. Principal contractors, transport operators, public-sector bodies and engineering consultancies working on London's rail, road and utility networks bring us in for contract labour and supervision, surveying, outsourced project services and anything in between.</p>
+          <div class="btns"><a href="#contact" class="btn">Request a quote</a><a href="#work" class="btn ghost">See example work</a></div>
+        </div>
+        <figure class="hero-art">
+          <svg viewBox="0 0 400 300" aria-hidden="true">
+            <g fill="none" stroke="#d8cfc9" stroke-width="1"><path d="M0 60h400M0 120h400M0 180h400M0 240h400M80 0v300M160 0v300M240 0v300M320 0v300"/></g>
+            <g fill="none" stroke="#191716" stroke-width="1.2">
+              <path d="M40 230 C100 220 140 160 200 150 S300 120 360 70"/>
+              <path d="M40 250 C110 240 150 185 210 172 S310 145 360 100" opacity=".4"/>
+            </g>
+            <g fill="#9c3b2a"><circle cx="80" cy="222" r="4"/><circle cx="200" cy="150" r="4"/><circle cx="300" cy="112" r="4"/><circle cx="360" cy="70" r="4"/></g>
+            <g fill="#55504c" font-family="IBM Plex Mono, monospace" font-size="9"><text x="88" y="214">CH 0+000</text><text x="208" y="142">CH 0+250</text><text x="308" y="104">CH 0+500</text></g>
+            <path d="M200 150 v90" stroke="#9c3b2a" stroke-dasharray="3 3"/>
+          </svg>
+          <figcaption>Fig. — Chainage &amp; setting out (illustration)</figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pad" id="work">
+  <div class="wrap">
+    <div class="sh"><span class="mono">01 — Selected work</span><h2>Three projects, <em>told briefly.</em></h2></div>
+    <div class="features">
+      <article class="feature">
+        <span class="no">I</span>
+        <div class="txt"><span class="mono">Central London · Illustrative</span><h3>Station access improvements</h3><p>Measured building survey plus site supervision during overnight works.</p><div class="tags"><span>Surveying</span><span>Site management</span><span>Night working</span></div></div>
+        <div class="vis"><svg viewBox="0 0 300 200" aria-hidden="true"><g fill="none" stroke="#191716" stroke-width="1"><rect x="50" y="40" width="200" height="120"/><path d="M50 100h200M130 40v120M190 40v120"/><path d="M90 160v-30h20v30"/></g><g stroke="#9c3b2a" fill="none"><path d="M40 30h-10v140h10M260 30h10v140h-10"/><path d="M50 180h200" stroke-dasharray="3 3"/></g><text x="130" y="194" font-size="9" fill="#9c3b2a" font-family="IBM Plex Mono, monospace">24.600</text></svg></div>
+      </article>
+      <article class="feature">
+        <span class="no">II</span>
+        <div class="vis"><svg viewBox="0 0 300 200" aria-hidden="true"><g fill="none" stroke="#191716" stroke-width="1"><path d="M-10 170 L310 60M-10 195 L310 85"/></g><g stroke="#9c3b2a" stroke-width="2"><path d="M30 165l12-4M90 144l12-4M150 123l12-4M210 102l12-4M270 81l12-4"/></g><g fill="#9c3b2a"><path d="M60 150l5-12 5 12z"/><path d="M180 108l5-12 5 12z"/><path d="M240 88l5-12 5 12z"/></g></svg></div>
+        <div class="txt"><span class="mono">South London · Illustrative</span><h3>Highway resurfacing programme</h3><p>Subcontract labour and traffic-management coordination across 40 sites.</p><div class="tags"><span>Subcontract delivery</span><span>Coordination</span></div></div>
+      </article>
+      <article class="feature">
+        <span class="no">III</span>
+        <div class="txt"><span class="mono">East London · Illustrative</span><h3>Utility diversion</h3><p>GPR and utility survey, setting out, and outsourced document control.</p><div class="tags"><span>GPR survey</span><span>Setting out</span><span>Document control</span></div></div>
+        <div class="vis"><svg viewBox="0 0 300 200" aria-hidden="true"><path d="M0 60h300" stroke="#191716"/><g fill="none" stroke="#191716" opacity=".35"><path d="M20 80 q20 40 40 0 q20 40 40 0 q20 40 40 0 q20 40 40 0 q20 40 40 0 q20 40 40 0"/></g><path d="M0 140h90c15 0 15-30 30-30h60c15 0 15 30 30 30h90" fill="none" stroke="#9c3b2a" stroke-width="2"/><path d="M0 170h300" stroke="#191716" stroke-dasharray="8 5"/></svg></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="pad services" id="services">
+  <div class="wrap">
+    <div class="sh"><span class="mono">02 — Services</span><h2>What we do, <em>in six parts.</em></h2></div>
+    <div class="svc-cols">
+      <aside><p class="pull">"Engage one service, or combine several under a single accountable lead."</p></aside>
+      <div class="svc-grid">
+        <article class="svc"><span class="mono">2.1</span><h3>Subcontract delivery</h3><p>Labour, supervision and plant packages delivered to your scope, programme and safety standards.</p></article>
+        <article class="svc"><span class="mono">2.2</span><h3>Contract &amp; interim staff</h3><p>Engineers, project managers, site supervisors, planners and skilled operatives, on day rate or fixed term.</p></article>
+        <article class="svc"><span class="mono">2.3</span><h3>Surveying</h3><p>Topographic, measured building, utility and GPR, rail and track asset, condition and dilapidation surveys, plus setting out.</p></article>
+        <article class="svc"><span class="mono">2.4</span><h3>Outsourced project services</h3><p>Planning, document control, commercial/QS support and CDM and H&amp;S coordination.</p></article>
+        <article class="svc"><span class="mono">2.5</span><h3>Site &amp; works management</h3><p>Experienced supervisors and managers who run packages day to day and report back to you.</p></article>
+        <article class="svc"><span class="mono">2.6</span><h3>Inspection &amp; asset data</h3><p>Asset inspections, defect logging and clean data handed over in your formats (CAD, GIS, BIM, spreadsheets).</p></article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pad" id="sectors">
+  <div class="wrap">
+    <div class="sh"><span class="mono">03 — Sectors</span>
+      <p class="sectors-line">Rail &amp; Underground<i>/</i>Highways &amp; Streets<i>/</i>Utilities<i>/</i>Stations &amp; Buildings<i>/</i>Local Authority &amp; Public Sector <em>— London &amp; the South East, mobilising UK-wide.</em></p>
+    </div>
+  </div>
+</section>
+
+<section class="pad why" id="why">
+  <div class="wrap">
+    <div class="sh"><span class="mono">04 — Why Tomhen</span><h2>Skilled people. Accurate data. <em>On programme.</em></h2></div>
+    <!-- PLACEHOLDER STATS: replace with verified figures before going live -->
+    <div class="stats">
+      <div class="stat"><b>15+</b><span>Years' combined experience</span></div>
+      <div class="stat"><b>200+</b><span>Projects supported</span></div>
+      <div class="stat"><b>24/7</b><span>Mobilisation</span></div>
+      <div class="stat"><b>100%</b><span>Vetted personnel</span></div>
+    </div>
+    <ul class="why-list">
+      <li><b>One contact</b>One accountable point of contact</li>
+      <li><b>Rapid mobilisation</b>Including night and possession working</li>
+      <li><b>Safety first</b>Safety-trained, compliance-ready teams</li>
+      <li><b>Flexible terms</b>Day rate, fixed price, call-off</li>
+      <li><b>Clear reporting</b>Transparent reporting and clean data handover</li>
+    </ul>
+  </div>
+</section>
+
+<section class="pad" id="process" style="background:var(--tint)">
+  <div class="wrap">
+    <div class="sh"><span class="mono">05 — How we work</span><h2>From brief to <em>handover.</em></h2></div>
+    <ol class="timeline">
+      <li><span class="mono">Step 1</span><h3>Brief</h3><p>Tell us the scope, location, access constraints and deadline.</p></li>
+      <li><span class="mono">Step 2</span><h3>Scope &amp; price</h3><p>A clear proposal within 48 hours (placeholder), on day-rate, fixed-price or framework terms.</p></li>
+      <li><span class="mono">Step 3</span><h3>Mobilise</h3><p>Vetted, inducted and competent people on site, fast.</p></li>
+      <li><span class="mono">Step 4</span><h3>Deliver &amp; report</h3><p>One point of contact, daily or weekly reporting, and clean handover.</p></li>
+    </ol>
+  </div>
+</section>
+
+<section class="acc" id="accreditations">
+  <div class="wrap">
+    <span class="mono">Accreditations &amp; clients<br>(placeholders)</span>
+    <div>
+      <div class="badges">
+        <!-- PLACEHOLDER: replace with a real, currently held accreditation -->
+        <div>Accreditation</div>
+        <!-- PLACEHOLDER: replace with a real, currently held safety scheme -->
+        <div>Safety scheme</div>
+        <!-- PLACEHOLDER: replace with a real, currently held supplier registration -->
+        <div>Supplier registration</div>
+        <!-- PLACEHOLDER: replace with a real, currently held ISO standard -->
+        <div>ISO standard</div>
+      </div>
+      <div class="badges cl"><div>Client logo</div><div>Client logo</div><div>Client logo</div><div>Client logo</div><div>Client logo</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="pad contact" id="contact">
+  <div class="wrap grid">
+    <span class="mono" style="border-top:1px solid var(--ink);padding-top:14px;align-self:start">06 — Contact</span>
+    <div>
+      <h2>Send us <em>the brief.</em></h2>
+      <p style="color:var(--ink-2)">Scope, location, access constraints and deadline. We'll reply with a clear proposal within 48 hours (placeholder).</p>
+      <address><b>T</b> 020 0000 0000<br><b>E</b> hello@example.co.uk<br><b>A</b> [Registered address]</address>
+    </div>
+    <div>
+      <form id="quote">
+        <div class="two">
+          <div class="fld"><label for="n">Name</label><input id="n" name="name" autocomplete="name"></div>
+          <div class="fld"><label for="o">Organisation</label><input id="o" name="org" autocomplete="organization"></div>
+        </div>
+        <div class="two">
+          <div class="fld"><label for="e">Email</label><input id="e" type="email" name="email" autocomplete="email"></div>
+          <div class="fld"><label for="p">Phone</label><input id="p" type="tel" name="phone" autocomplete="tel"></div>
+        </div>
+        <div class="fld"><label for="s">Service</label><select id="s" name="service"><option>Subcontract delivery</option><option>Contract &amp; interim staff</option><option>Surveying</option><option>Outsourced project services</option><option>Site &amp; works management</option><option>Inspection &amp; asset data</option></select></div>
+        <div class="fld"><label for="m">Brief</label><textarea id="m" name="brief"></textarea></div>
+        <button type="submit" class="btn">Request a quote</button>
+      </form>
+      <div class="thanks" role="status"><h3>Thank you.</h3><p style="color:var(--ink-2)">Your brief is with us and we'll be in touch shortly. (Demo form: nothing has been sent.)</p></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="grid">
+      <div><a href="#top" class="logo">Tomhen<span>.</span></a><p style="margin-top:10px">Contract delivery, surveying and specialist support for infrastructure clients.</p></div>
+      <div><h4>Sections</h4><ul><li><a href="#work">Work</a></li><li><a href="#services">Services</a></li><li><a href="#sectors">Sectors</a></li><li><a href="#process">Process</a></li></ul></div>
+      <div><h4>Contact</h4><ul><li>020 0000 0000</li><li>hello@example.co.uk</li><li>[Registered address]</li></ul></div>
+      <div><h4>Company</h4><ul><li>Company no. [00000000]</li><li><a href="#accreditations">Accreditations</a></li><li><a href="#contact">Request a quote</a></li></ul></div>
+    </div>
+    <div class="legal">© Tomhen Services (placeholder). Registered in England &amp; Wales. [Registered address]</div>
+  </div>
+</footer>
+
+<nav class="mbar" aria-label="Quick actions">
+  <a class="call" href="tel:+442000000000">Call<small>020 0000 0000</small></a>
+  <a class="q" href="#contact">Request a quote</a>
+</nav>
+<a class="vpill" href="../index.html" aria-label="Back to shortlist" title="Back to shortlist">Option 4 · Back to shortlist</a>
+
+<script>
+(function(){
+  var ov=document.getElementById('ov'),t=document.querySelector('.tog');
+  function set(o){ov.classList.toggle('on',o);ov.setAttribute('aria-hidden',!o);t.setAttribute('aria-expanded',o);document.body.style.overflow=o?'hidden':''}
+  t.addEventListener('click',function(){set(true)});
+  ov.querySelector('.x').addEventListener('click',function(){set(false)});
+  ov.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){set(false)})});
+  var f=document.getElementById('quote');
+  f.addEventListener('submit',function(e){e.preventDefault();f.classList.add('sent')});
+})();
+</script>
+</body>
+</html>
